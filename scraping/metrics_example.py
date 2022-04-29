@@ -9,14 +9,15 @@ import os
 import googleapiclient.discovery
 
 
-def main():
+def get_comments():
+    """Retrieves a dictionary from the YouTube Data API for information on comment threads."""
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = "API_KEY!!!!!!"
+    DEVELOPER_KEY = "API KEY!! Ask Parker if you need help"
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
@@ -27,8 +28,22 @@ def main():
     )
     response = request.execute()
 
-    print(response)
+    return response
+
+
+def clean_comments(comments):
+    """Extracts comments from comments-threads dictionary and saves comments into a list of strings"""
+    comment_list = []
+
+    for i in range(19):
+        comment_list += [
+            comments["items"][i]["snippet"]["topLevelComment"]["snippet"][
+                "textOriginal"
+            ]
+        ]
+
+    return print(comment_list)
 
 
 if __name__ == "__main__":
-    main()
+    clean_comments(get_comments())
