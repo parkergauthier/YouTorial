@@ -4,6 +4,8 @@
 # See instructions for running these code samples locally:
 # https://developers.google.com/explorer-help/code-samples#python
 
+
+#%%
 import os
 
 import googleapiclient.discovery
@@ -34,3 +36,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#%%
