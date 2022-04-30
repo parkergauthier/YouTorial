@@ -35,15 +35,13 @@ def main():
 
     return response
 
+if __name__ == "__main__":
+    main()
+
+#%%
 soup_ = main()
 ids = []
 
 for i in soup_:
     soup_.get(etag, default = None)
     ids = append.ids
-
-#%%
-if __name__ == "__main__":
-    main()
-
-#%%
