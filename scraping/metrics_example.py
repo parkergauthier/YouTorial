@@ -5,45 +5,45 @@
 # https://developers.google.com/explorer-help/code-samples#python
 
 import os
-
 import googleapiclient.discovery
 
+BASE_DIR = "../scraping"
+KEY_PATH = os.path.join(BASE_DIR, "api_keyPG.txt")
 
-def get_comments():
-    """Retrieves a dictionary from the YouTube Data API for information on comment threads."""
+with open(KEY_PATH) as f:
+    api_key = f.readline()
+
+
+def get_metrics(video_id):
+    """Retrieves a dictionary from the YouTube Data API for information on views, likes, and comment counts."""
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = "API KEY!! Ask Parker if you need help"
+    DEVELOPER_KEY = api_key
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
     )
 
-    request = youtube.commentThreads().list(
-        part="snippet,replies", videoId="QuGCXXeJV5Y"
-    )
+    request = youtube.videos().list(part="statistics", id=video_id)
     response = request.execute()
 
     return response
 
 
-def clean_comments(comments):
-    """Extracts comments from comments-threads dictionary and saves comments into a list of strings"""
-    comment_list = []
+def extract_metrics(metrics_dict):
 
-    for i in range(19):
-        comment_list += [
-            comments["items"][i]["snippet"]["topLevelComment"]["snippet"][
-                "textOriginal"
-            ]
-        ]
+    clean_dict = {
+        "views": metrics_dict["items"][0]["statistics"]["viewCount"],
+        "likes": metrics_dict["items"][0]["statistics"]["likeCount"],
+        "comments": metrics_dict["items"][0]["statistics"]["commentCount"],
+    }
 
-    return print(comment_list)
+    return clean_dict
 
 
 if __name__ == "__main__":
-    clean_comments(get_comments())
+    print(extract_metrics(get_metrics("SwSbnmqk3zY")))
