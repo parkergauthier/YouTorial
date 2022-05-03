@@ -28,7 +28,7 @@ def get_metrics(video_id):
         api_service_name, api_version, developerKey=DEVELOPER_KEY
     )
 
-    request = youtube.videos().list(part="statistics", id=video_id)
+    request = youtube.videos().list(part="statistics, contentDetails", id=video_id)
     response = request.execute()
 
     return response
@@ -37,9 +37,11 @@ def get_metrics(video_id):
 def extract_metrics(metrics_dict):
 
     clean_dict = {
+        "videoId": metrics_dict["items"][0]["id"],
         "views": metrics_dict["items"][0]["statistics"]["viewCount"],
         "likes": metrics_dict["items"][0]["statistics"]["likeCount"],
         "comments": metrics_dict["items"][0]["statistics"]["commentCount"],
+        "length": metrics_dict["items"][0]["contentDetails"]["duration"],
     }
 
     return clean_dict
