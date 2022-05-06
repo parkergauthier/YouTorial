@@ -7,11 +7,14 @@
 import os
 import googleapiclient.discovery
 
-BASE_DIR = "../scraping"
+#from metrics_karlo import API_KEY
+
+BASE_DIR = "scraping"
 KEY_PATH = os.path.join(BASE_DIR, "api_keyPG.txt")
 
-with open(KEY_PATH) as f:
-    api_key = f.readline()
+# with open(KEY_PATH) as f:
+#     api_key = f.readline()
+api_key = 'AIzaSyAtZPilsatG7GcuEKKB1fX-mLSpwsIkydQ'
 
 
 def get_metrics(video_id):
