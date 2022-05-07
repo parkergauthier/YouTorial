@@ -6,18 +6,19 @@
 
 import os
 import googleapiclient.discovery
+import json
 
 #from metrics_karlo import API_KEY
 
 BASE_DIR = "scraping"
-KEY_PATH = os.path.join(BASE_DIR, "api_keyPG.txt")
+KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
-# with open(KEY_PATH) as f:
-#     api_key = f.readline()
-api_key = 'AIzaSyAtZPilsatG7GcuEKKB1fX-mLSpwsIkydQ'
+with open(KEY_PATH, "r") as f:
+    api_key_dict = json.load(f)
+api_key = api_key_dict['Amal_key']
 
 
-def get_metrics(video_id):
+def get_metrics(video_id, apiKey=api_key):
     """Retrieves a dictionary from the YouTube Data API for information on views, likes, and comment counts."""
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
@@ -25,7 +26,7 @@ def get_metrics(video_id):
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = api_key
+    DEVELOPER_KEY = apiKey
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY

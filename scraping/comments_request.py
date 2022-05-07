@@ -7,16 +7,18 @@ import pandas as pd
 import json
 
 BASE_DIR = 'scraping'
-KEY_PATH = os.path.join(BASE_DIR, "api_keyPG.txt")
+KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 # with open(KEY_PATH) as f:
 #api_key = f.readline()
-api_key = 'AIzaSyAtZPilsatG7GcuEKKB1fX-mLSpwsIkydQ'
+with open(KEY_PATH, "r") as f:
+    api_keys = json.load(f)
+api_key = api_keys['Amal_key']
 
 sample_id = 'QuGCXXeJV5Y'  # change with variable later, just to make the code run
 
 
-def get_comments(video_id):
+def get_comments(video_id, apiKey=api_key):
     '''Uses the youtube v3 API to get the commentsThread:list object with 25 comments'''
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
