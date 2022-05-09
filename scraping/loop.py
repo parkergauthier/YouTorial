@@ -33,7 +33,6 @@ list_metrics = []
 
 
 comment_dict = {}
-
 for i in videos_list:
     comments_dicts = get_comments(i, apiKey=api_key)['items']
     clean_comments_list = clean_comments(comments_dicts)
@@ -46,4 +45,5 @@ for i in videos_list:
     extract_metrics_list = extract_metrics(metrics_dicts)
     list_metrics += [extract_metrics_list]
     comment_dict['videoId']= list_comments
-print(comment_dict)
+    my_big_fat_df= pd.DataFrame(comment_dict['videoId'])
+print(my_big_fat_df)
