@@ -31,6 +31,9 @@ videos_list = ["SwSbnmqk3zY", videos['videoID']['1'],
 list_comments = []
 list_metrics = []
 
+
+comment_dict = {}
+
 for i in videos_list:
     comments_dicts = get_comments(i, apiKey=api_key)['items']
     clean_comments_list = clean_comments(comments_dicts)
@@ -38,13 +41,9 @@ for i in videos_list:
         "videoId": i,
         "comments": clean_comments_list
     }
-
     list_comments += [dict_comments]
-
     metrics_dicts = get_metrics(i, apiKey=api_key)
-    print(metrics_dicts)
     extract_metrics_list = extract_metrics(metrics_dicts)
-
     list_metrics += [extract_metrics_list]
-
-print(list_comments, list_metrics)
+    comment_dict['videoId']= list_comments
+print(comment_dict)
