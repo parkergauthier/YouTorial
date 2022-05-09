@@ -29,16 +29,27 @@ api_key = api_keys["John_key"]
 
 # Reading in sample JSON, to be changed with real video list later
 ####################
-with open(JSON_PATH_IN, "r") as f:
-    videos = json.load(f)
+# with open(JSON_PATH_IN, "r") as f:
+#     videos = json.load(f)
 
-videos_list = [
-    "SwSbnmqk3zY",
-    videos["videoID"]["1"],
-    videos["videoID"]["2"],
-    videos["videoID"]["3"],
-    videos["videoID"]["4"],
-]
+conn = psycopg2.connect(dbname = 'youtube-content', user ='youtube-project', host='35.226.197.36', password='Zhanghaokun_6')
+
+cur = conn.cursor()
+
+cur.execute(""" select * from test_table_unique where "videoID" not in (select "videoID" from youtube_content) """)
+
+records = cur.fetchall()
+cur.close()
+
+records = video_list
+
+# videos_list = [
+#     "SwSbnmqk3zY",
+#     videos["videoID"]["1"],
+#     videos["videoID"]["2"],
+#     videos["videoID"]["3"],
+#     videos["videoID"]["4"],
+# ]
 #####################
 
 # Looping through videos from list to get metrics/commenst and pushing them to sql
