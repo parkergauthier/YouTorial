@@ -10,7 +10,7 @@ from comments_request import get_comments, clean_comments
 
 
 # Setting Paths
-API_BASE_DIR = "/Users/amalkadri/Documents/GitHub/YouTorial/scraping"
+API_BASE_DIR = "scraping"
 API_KEY_PATH = os.path.join(API_BASE_DIR, "api_keys.json")
 JSON_PATH_IN = os.path.join(API_BASE_DIR, "500_videos.json")
 
