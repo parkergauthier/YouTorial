@@ -1,0 +1,1 @@
+alter table youtube_content add column views varchar(255) not null;
