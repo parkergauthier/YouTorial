@@ -1,4 +1,3 @@
-
 import os
 from matplotlib.cbook import flatten
 import googleapiclient.discovery
@@ -17,39 +16,59 @@ db = create_engine(conn_string)
 conn = db.connect()
 
 
-
 # Setting Paths
 API_BASE_DIR = "scraping"
 API_KEY_PATH = os.path.join(API_BASE_DIR, "api_keys.json")
 JSON_PATH_IN = os.path.join(API_BASE_DIR, "500_videos.json")
-OUT_PATH_TEST = os.path.join(API_BASE_DIR,"testing.csv")
+OUT_PATH_TEST = os.path.join(API_BASE_DIR, "testing.csv")
 
 # Reading API Key
 with open(API_KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys['John_key']
+api_key = api_keys["John_key"]
 
 # Reading in sample JSON, to be changed with real video list later
 ####################
-with open(JSON_PATH_IN, "r") as f:
-    videos = json.load(f)
+# with open(JSON_PATH_IN, "r") as f:
+#     videos = json.load(f)
 
-videos_list = ["SwSbnmqk3zY", videos['videoID']['1'],
-               videos['videoID']['2'], videos['videoID']['3'], videos['videoID']['4']]
+conn = psycopg2.connect(dbname = 'youtube-content', user ='youtube-project', host='35.226.197.36', password='Zhanghaokun_6')
+
+cur = conn.cursor()
+
+cur.execute(""" select * from test_table_unique where "videoID" not in (select "videoID" from youtube_content) """)
+
+records = cur.fetchall()
+cur.close()
+
+records = video_list
+
+# videos_list = [
+#     "SwSbnmqk3zY",
+#     videos["videoID"]["1"],
+#     videos["videoID"]["2"],
+#     videos["videoID"]["3"],
+#     videos["videoID"]["4"],
+# ]
 #####################
 
-list_comments = []
-list_metrics = []
+# Looping through videos from list to get metrics/commenst and pushing them to sql
 
-comment_dict = {}
-for i in videos_list:
-    comments_dicts = get_comments(i, apiKey=api_key)['items']
-    clean_comments_list = clean_comments(comments_dicts)
 
-    video = i
+def send2sql(videos_list):
+    for i in videos_list:
 
-    video_string = [video]*len(clean_comments_list)
+        # grabbing comments
+        comments_dicts = get_comments(i, apiKey=api_key)["items"]
+        clean_comments_list = clean_comments(comments_dicts)
 
-    df = pd.DataFrame(list(zip(video_string, clean_comments_list)), columns=["videoId", "comment"])
-    df.to_sql(con=conn, name="youtube_comment", if_exists="append")
+        # grabbing metrics
+        metrics_dict_dirty = get_metrics(i, apiKey=api_key)
+        metrics_dict = extract_metrics(metrics_dict_dirty)
 
+        # Creating df for comments
+        video_string = [i] * len(clean_comments_list)
+        df = pd.DataFrame(
+            list(zip(video_string, clean_comments_list)), columns=["videoId", "comment"]
+        )
+        df.to_sql(con=conn, name="youtube_comment", if_exists="append")
