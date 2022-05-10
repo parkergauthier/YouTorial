@@ -27,11 +27,18 @@ def get_comments(video_id, apiKey=api_key):
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
     )
+    try:
+        request = youtube.commentThreads().list(
+            part="snippet", maxResults=25, order="relevance", pageToken="", videoId=video_id
+        )
+        response = request.execute()
+    except googleapiclient.errors.HttpError as API_ERROR:
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        print(API_ERROR)
+        print("ERROR: Request could not be processed. Check to see if your API key has met it's quota")
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        quit()
 
-    request = youtube.commentThreads().list(
-        part="snippet", maxResults=25, order="relevance", pageToken="", videoId=video_id
-    )
-    response = request.execute()
     return response
 
 

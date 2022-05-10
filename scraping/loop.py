@@ -6,7 +6,6 @@ import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy import values
 from metrics import get_metrics, extract_metrics
-from random import sample
 from comments_request import get_comments, clean_comments
 
 # Connecting to DB
@@ -24,7 +23,7 @@ OUT_PATH_TEST = os.path.join(API_BASE_DIR, "testing.csv")
 # Reading API Key
 with open(API_KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Parker_key"]
+api_key = api_keys["Amal_key"]
 
 # Reading in sample JSON, to be changed with real video list later
 ####################
@@ -48,11 +47,11 @@ def snowball(videos_num=100):
     i = 0
     for video in cur:
         i += 1
-        try:
-            video_id = send2sql([video[0]])
-            print(f"{i} videos completed: {video_id[0]}")
-        except:
-            print(f"PASSED ON THIS ONE: {video[0]} ")
+        # try:
+        video_id = send2sql([video[0]])
+        print(f"{i} videos completed: {video_id[0]}")
+        # except:
+        #print(f"PASSED ON THIS ONE: {video[0]} ")
         if i == videos_num:
             print("YAY! ALL DONE! :D")
 
@@ -62,20 +61,20 @@ def send2sql(videos_list):
     for i in videos_list:
 
         # grabbing metrics
-        # try:
         metrics_dict_dirty = get_metrics(i, apiKey=api_key)
-        metrics_dict = extract_metrics(metrics_dict_dirty)
-        # except:
-        #     print(
-        #         f"This video: [{videos_list[0]}] is unavalable, and has been coded with -9 in metrics"
-        #     )
-        #     metrics_dict = {
-        #         "videoID": -9,
-        #         "likes": -9,
-        #         "comments": -9,
-        #         "length": -9,
-        #         "views": -9,
-        #     }
+        try:
+            metrics_dict = extract_metrics(metrics_dict_dirty)
+        except:
+            print(
+                f"This video: [{videos_list[0]}] is unavalable, and has been coded with -9 in metrics"
+            )
+            metrics_dict = {
+                "videoID": videos_list[0],
+                "likes": -9,
+                "comments": -9,
+                "length": -9,
+                "views": -9,
+            }
         # creating df for metrics
         df_met = pd.Series(metrics_dict).to_frame().T
 
@@ -102,4 +101,4 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    snowball(3)
+    snowball(10)
