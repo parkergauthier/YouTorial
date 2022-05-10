@@ -55,17 +55,18 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
 
 
 def get_vid_ids(dict_list):
-
+    
     id_list = []
 
     for i in range(len(dict_list)):
         vid_info = {
             'videoID': dict_list[i]['id']['videoId'],
-            'title': dict_list[i]['snippet']['title']
+            'title': dict_list[i]['snippet']['title'],
+            'channelid': dict_list[i]['snippet']['channelId']
         }
         id_list.append(vid_info)
     return id_list
-
+    
 
 def get_tutorial_url_list(loop_len=50, track=True):
     '''Calls functions to request youtube search results as a list of video IDs and titles as a dictionary, with 50 IDs per iteration'''
