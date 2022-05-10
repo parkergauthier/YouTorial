@@ -1,21 +1,13 @@
-# -*- coding: utf-8 -*-
-
-# Sample Python code for youtube.commentThreads.list
-# See instructions for running these code samples locally:
-# https://developers.google.com/explorer-help/code-samples#python
-
 import os
 import googleapiclient.discovery
 import json
-
-#from metrics_karlo import API_KEY
 
 BASE_DIR = "scraping"
 KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 with open(KEY_PATH, "r") as f:
     api_key_dict = json.load(f)
-api_key = api_key_dict['Amal_key']
+api_key = api_key_dict["Parker_key"]
 
 
 def get_metrics(video_id, apiKey=api_key):
@@ -31,25 +23,53 @@ def get_metrics(video_id, apiKey=api_key):
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
     )
-
-    request = youtube.videos().list(part="statistics, contentDetails", id=video_id)
-    response = request.execute()
+    try:
+        request = youtube.videos().list(part="statistics, contentDetails", id=video_id)
+        response = request.execute()
+    except googleapiclient.errors.HttpError as API_ERROR:
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        print(API_ERROR)
+        print("ERROR: Request could not be processed. Check to see if your API key has met it's quota")
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        quit()
 
     return response
 
 
 def extract_metrics(metrics_dict):
+    """Takes information from a dictionary associated with a video and collects metrics of interest"""
+    if metrics_dict['items'] == []:
+        print("This video has no metrics, it may have been deleted")
+        pass
 
     clean_dict = {
-        "videoId": metrics_dict["items"][0]["id"],
-        "views": metrics_dict["items"][0]["statistics"]["viewCount"],
-        "likes": metrics_dict["items"][0]["statistics"]["likeCount"],
-        "comments": metrics_dict["items"][0]["statistics"]["commentCount"],
-        "length": metrics_dict["items"][0]["contentDetails"]["duration"],
+        "videoID": metrics_dict["items"][0]["id"],
     }
+
+    try:
+        clean_dict["likes"] = metrics_dict["items"][0]["statistics"]["likeCount"]
+    except:
+        clean_dict["likes"] = -1
+
+    try:
+        clean_dict["comments"] = metrics_dict["items"][0]["statistics"]["commentCount"]
+    except:
+        clean_dict["comments"] = -1
+
+    try:
+        clean_dict["length"] = metrics_dict["items"][0]["contentDetails"]["duration"]
+    except:
+        clean_dict["length"] = -1
+
+    try:
+        clean_dict["views"] = metrics_dict["items"][0]["statistics"]["viewCount"]
+    except:
+        clean_dict["view"] = -1
 
     return clean_dict
 
 
 if __name__ == "__main__":
-    print(extract_metrics(get_metrics("SwSbnmqk3zY")))
+    # print(extract_metrics(get_metrics("hQkJOP7CBII")))
+    # print(get_metrics("x2XTxT38jms"))
+    print((get_metrics("x2XTxT38jms")))

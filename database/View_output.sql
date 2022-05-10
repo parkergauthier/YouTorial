@@ -1,0 +1,1 @@
+create table test_table_unique_output  as select * from test_table_unique 
