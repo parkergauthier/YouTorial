@@ -1,9 +1,5 @@
-# Sample Python code for youtube.commentThreads.list
-# See instructions for running these code samples locally:
-# https://developers.google.com/explorer-help/code-samples#python
 import os
 import googleapiclient.discovery
-import pandas as pd
 import json
 
 BASE_DIR = "scraping"
@@ -45,27 +41,13 @@ def clean_comments(comments_dict):
 
     for i in range(len(comments_dict)):
         comment_list += [
-            comments_dict[i]["snippet"]["topLevelComment"]["snippet"]["textOriginal"]
+            comments_dict["items"][i]["snippet"]["topLevelComment"]["snippet"][
+                "textOriginal"
+            ]
         ]
 
     return comment_list
 
 
-def request_comments_list(videoId):
-    items = get_comments(sample_id)["items"]
-    clean_items = clean_comments(items)
-    return clean_items
-
-
 if __name__ == "__main__":
-    comments_list = request_comments_list(sample_id)
-    # df_items = pd.DataFrame(clean_items)
-    # json_items = pd.DataFrame.to_json(items)
-    print(comments_list)
-
-    # with open('comments.json', 'w') as outfile:
-    #     outfile.write(json_items)
-
-# sample to see what the items look like, mess with this however you like, remove later
-# print(items[0]['snippet']['topLevelComment']['snippet']['textOriginal'])
-# print(len(clean_comments(items)))
+    print(clean_comments(get_comments(sample_id)))

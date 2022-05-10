@@ -1,14 +1,6 @@
-# -*- coding: utf-8 -*-
-
-# Sample Python code for youtube.commentThreads.list
-# See instructions for running these code samples locally:
-# https://developers.google.com/explorer-help/code-samples#python
-
 import os
 import googleapiclient.discovery
 import json
-
-# from metrics_karlo import API_KEY
 
 BASE_DIR = "scraping"
 KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
@@ -39,7 +31,7 @@ def get_metrics(video_id, apiKey=api_key):
 
 
 def extract_metrics(metrics_dict):
-
+    """Takes information from a dictionary associated with a video and collects metrics of interest"""
     clean_dict = {
         "videoID": metrics_dict["items"][0]["id"],
         "likes": metrics_dict["items"][0]["statistics"]["likeCount"],

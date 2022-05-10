@@ -1,5 +1,4 @@
 import os
-import googleapiclient.discovery
 import pandas as pd
 import json
 from sqlalchemy import create_engine
@@ -59,14 +58,12 @@ records = video_list
 #####################
 
 
-
-
 def send2sql(videos_list):
     """Looping through videos from list to get metrics/comments and pushing them to sql"""
     for i in videos_list:
 
         # grabbing comments
-        comments_dicts = get_comments(i, apiKey=api_key)["items"]
+        comments_dicts = get_comments(i, apiKey=api_key)
         clean_comments_list = clean_comments(comments_dicts)
 
         # Creating df for comments
@@ -90,4 +87,4 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    #send2sql(videos_list)
+    send2sql(["k_36JKMLp08"])
