@@ -50,4 +50,5 @@ def clean_comments(comments_dict):
 
 
 if __name__ == "__main__":
-    print(clean_comments(get_comments("i92HaidDigI")))
+    # print(clean_comments(get_comments("1vmLVzU4KD8")))
+    print(get_comments("1vmLVzU4KD8"))
