@@ -68,7 +68,6 @@ def get_vid_ids(dict_list):
 
 def get_tutorial_url_list(loop_len=50, track=True):
     '''Calls functions to request youtube search results as a list of video IDs and titles as a dictionary, with 50 IDs per iteration'''
-    page_token = ''
     full_id_list = []
 
     # define region centers:
