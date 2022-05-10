@@ -1,8 +1,9 @@
 import os
 import pandas as pd
 import json
-from sqlalchemy import create_engine
+import psycopg2
 
+from sqlalchemy import create_engine
 from sqlalchemy import values
 from metrics import get_metrics, extract_metrics
 from random import sample
@@ -39,23 +40,10 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-cur.execute(
-    """ select * from test_table_unique where "videoID" not in (select "videoID" from youtube_content) """
-)
+cur.execute("""select * from snowflake_new_vid_ids limit 3""")
 
-records = cur.fetchall()
-cur.close()
-
-records = video_list
-
-# videos_list = [
-#     "SwSbnmqk3zY",
-#     videos["videoID"]["1"],
-#     videos["videoID"]["2"],
-#     videos["videoID"]["3"],
-#     videos["videoID"]["4"],
-# ]
-#####################
+for video in cur:
+    print(video[0])
 
 
 def send2sql(videos_list):
