@@ -24,7 +24,7 @@ OUT_PATH_TEST = os.path.join(API_BASE_DIR, "testing.csv")
 # Reading API Key
 with open(API_KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["John_key"]
+api_key = api_keys["Parker_key"]
 
 # Reading in sample JSON, to be changed with real video list later
 ####################
@@ -62,19 +62,20 @@ def send2sql(videos_list):
     for i in videos_list:
 
         # grabbing metrics
-        try:
-            metrics_dict_dirty = get_metrics(i, apiKey=api_key)
-            metrics_dict = extract_metrics(metrics_dict_dirty)
-        except:
-            print(
-                f"This video: [{videos_list[0]}] is unavalable, and has been coded with -9 in metrics")
-            metrics_dict = {
-                "videoID": -9,
-                "likes": -9,
-                "comments": -9,
-                "length": -9,
-                "views": -9,
-            }
+        # try:
+        metrics_dict_dirty = get_metrics(i, apiKey=api_key)
+        metrics_dict = extract_metrics(metrics_dict_dirty)
+        # except:
+        #     print(
+        #         f"This video: [{videos_list[0]}] is unavalable, and has been coded with -9 in metrics"
+        #     )
+        #     metrics_dict = {
+        #         "videoID": -9,
+        #         "likes": -9,
+        #         "comments": -9,
+        #         "length": -9,
+        #         "views": -9,
+        #     }
         # creating df for metrics
         df_met = pd.Series(metrics_dict).to_frame().T
 
@@ -101,4 +102,4 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    snowball(5)
+    snowball(3)
