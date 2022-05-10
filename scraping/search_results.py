@@ -127,7 +127,7 @@ def get_tutorial_url_list(loop_len=50, track=True):
         conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
         db = create_engine(conn_string)
         conn = db.connect()
-        df.to_sql(con=conn, name="test_table", if_exists="append")
+        df.to_sql(con=conn, name="youtube_id", if_exists="append")
 
         print("=========================================")
         num_results = (i*250+250)
