@@ -1,5 +1,4 @@
 import os
-from matplotlib.cbook import flatten
 import googleapiclient.discovery
 import pandas as pd
 import json
@@ -62,13 +61,24 @@ def send2sql(videos_list):
         comments_dicts = get_comments(i, apiKey=api_key)["items"]
         clean_comments_list = clean_comments(comments_dicts)
 
+        # Creating df for comments
+        video_string = [i] * len(clean_comments_list)
+        df_comm = pd.DataFrame(
+            list(zip(video_string, clean_comments_list)), columns=["videoID", "comment"]
+        )
+
+        # Sending df to SQL
+        df_comm.to_sql(con=conn, name="youtube_comments", if_exists="append")
+
         # grabbing metrics
         metrics_dict_dirty = get_metrics(i, apiKey=api_key)
         metrics_dict = extract_metrics(metrics_dict_dirty)
 
-        # Creating df for comments
-        video_string = [i] * len(clean_comments_list)
-        df = pd.DataFrame(
-            list(zip(video_string, clean_comments_list)), columns=["videoId", "comment"]
-        )
-        df.to_sql(con=conn, name="youtube_comment", if_exists="append")
+        # creating df for metrics
+        df_met = pd.Series(metrics_dict).to_frame().T
+
+        # sending df to SQL
+        df_met.to_sql(con=conn, name="youtube_metrics", if_exists="append")
+
+
+send2sql(["pb4xXXEA8zk"])
