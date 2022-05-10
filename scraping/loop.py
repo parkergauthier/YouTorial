@@ -62,9 +62,17 @@ def send2sql(videos_list):
     for i in videos_list:
 
         # grabbing metrics
-        metrics_dict_dirty = get_metrics(i, apiKey=api_key)
-        metrics_dict = extract_metrics(metrics_dict_dirty)
-
+        try:
+            metrics_dict_dirty = get_metrics(i, apiKey=api_key)
+            metrics_dict = extract_metrics(metrics_dict_dirty)
+        except:
+            metrics_dict = {
+                "videoID": -9,
+                "likes": -9,
+                "comments": -9,
+                "length": -9,
+                "views": -9,
+            }
         # creating df for metrics
         df_met = pd.Series(metrics_dict).to_frame().T
 
@@ -91,5 +99,4 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    # send2sql(['eVpbSK4SC2o'])
-    snowball(100)
+    snowball(5)
