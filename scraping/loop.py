@@ -41,30 +41,25 @@ conn_query = psycopg2.connect(
 
 cur = conn_query.cursor()
 
+
 def snowball(videos_num=100):
 
-    cur.execute(f'select * from snowflake_new_vid_ids limit {videos_num}')
-
+    cur.execute(f"select * from snowflake_new_vid_ids limit {videos_num}")
+    i = 0
     for video in cur:
-        send2sql([video[0]])
+        i += 1
+        try:
+            video_id = send2sql([video[0]])
+            print(f"{i} videos completed: {video_id[0]}")
+        except:
+            print(f"PASSED ON THIS ONE: {video[0]} ")
+        if i == videos_num:
+            print("YAY! ALL DONE! :D")
 
 
 def send2sql(videos_list):
     """Looping through videos from list to get metrics/comments and pushing them to sql"""
     for i in videos_list:
-
-        # grabbing comments
-        comments_dicts = get_comments(i, apiKey=api_key)
-        clean_comments_list = clean_comments(comments_dicts)
-
-        # Creating df for comments
-        video_string = [i] * len(clean_comments_list)
-        df_comm = pd.DataFrame(
-            list(zip(video_string, clean_comments_list)), columns=["videoID", "comment"]
-        )
-
-        # Sending df to SQL
-        df_comm.to_sql(con=conn, name="youtube_comments", if_exists="append")
 
         # grabbing metrics
         metrics_dict_dirty = get_metrics(i, apiKey=api_key)
@@ -76,9 +71,24 @@ def send2sql(videos_list):
         # sending df to SQL
         df_met.to_sql(con=conn, name="youtube_metrics", if_exists="append")
 
-    pass
+        # grabbing comments
+        try:
+            comments_dicts = get_comments(i, apiKey=api_key)
+            clean_comments_list = clean_comments(comments_dicts)
+        except:
+            clean_comments_list = []
 
+        # Creating df for comments
+        video_string = [i] * len(clean_comments_list)
+        df_comm = pd.DataFrame(
+            list(zip(video_string, clean_comments_list)), columns=["videoID", "comment"]
+        )
+
+        # Sending df to SQL
+        df_comm.to_sql(con=conn, name="youtube_comments", if_exists="append")
+
+    return videos_list
 
 
 if __name__ == "__main__":
-    snowball(1)
+    snowball(1000)
