@@ -40,10 +40,12 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-cur.execute("""select * from snowflake_new_vid_ids limit 3""")
+def snowball(videos_num=100):
 
-for video in cur:
-    print(video[0])
+    cur.execute(f'select * from snowflake_new_vid_ids limit {videos_num}')
+
+    for video in cur:
+        send2sql([video[0]])
 
 
 def send2sql(videos_list):
@@ -73,6 +75,9 @@ def send2sql(videos_list):
         # sending df to SQL
         df_met.to_sql(con=conn, name="youtube_metrics", if_exists="append")
 
+    pass
+
+
 
 if __name__ == "__main__":
-    send2sql(["k_36JKMLp08"])
+    snowball(1)
