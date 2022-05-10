@@ -35,27 +35,33 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY)
-
-    request = youtube.search().list(
-        part="snippet",
-        maxResults=50,
-        topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
-        pageToken=token,
-        q="make firends",
-        type="video",
-        order="viewCount",
-        videoCategoryId="26",
-        regionCode='US',
-        location=region_center,
-        locationRadius="1000km"
-    )
-    response = request.execute()
+    try:
+        request = youtube.search().list(
+            part="snippet",
+            maxResults=50,
+            topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
+            pageToken=token,
+            q="make firends",
+            type="video",
+            order="viewCount",
+            videoCategoryId="26",
+            regionCode='US',
+            location=region_center,
+            locationRadius="1000km"
+        )
+        response = request.execute()
+    except googleapiclient.errors.HttpError as API_ERROR:
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        print(API_ERROR)
+        print("ERROR: Request could not be processed. Check to see if your API key has met it's quota")
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        quit()
 
     return response
 
 
 def get_vid_ids(dict_list):
-    
+
     id_list = []
 
     for i in range(len(dict_list)):
@@ -66,7 +72,7 @@ def get_vid_ids(dict_list):
         }
         id_list.append(vid_info)
     return id_list
-    
+
 
 def get_tutorial_url_list(loop_len=50, track=True):
     '''Calls functions to request youtube search results as a list of video IDs and titles as a dictionary, with 50 IDs per iteration'''
