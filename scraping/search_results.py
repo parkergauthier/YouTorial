@@ -41,7 +41,7 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
         maxResults=50,
         topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
         pageToken=token,
-        q="python | coding | NLP | text analysis | tutorial",
+        q="python | coding",
         type="video",
         videoCategoryId="26",
         regionCode='US',
