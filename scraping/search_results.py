@@ -19,7 +19,7 @@ KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 with open(KEY_PATH) as f:
     all_keys = json.load(f)
-    api_key = all_keys['potatacago_key']
+    api_key = all_keys['Karlo_key']
 #api_key = 'AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg'
 
 
@@ -41,7 +41,7 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
             maxResults=50,
             topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
             pageToken=token,
-            q="make firends",
+            q="make friends",
             type="video",
             order="viewCount",
             videoCategoryId="26",
@@ -68,7 +68,7 @@ def get_vid_ids(dict_list):
         vid_info = {
             'videoID': dict_list[i]['id']['videoId'],
             'title': dict_list[i]['snippet']['title'],
-            'channelid': dict_list[i]['snippet']['channelId']
+            'channelID': dict_list[i]['snippet']['channelId']
         }
         id_list.append(vid_info)
     return id_list
@@ -127,7 +127,8 @@ def get_tutorial_url_list(loop_len=50, track=True):
 
         # transform list to dataframe
 
-        df = pd.DataFrame(full_id_list)
+        df = pd.DataFrame(full_id_list).drop_duplicates().set_index(['videoID'])
+        #print(df.shape)
 
         # upload dataframe to table
 
@@ -170,4 +171,3 @@ def get_tutorial_url_list(loop_len=50, track=True):
 if __name__ == "__main__":
     num_iterations = 4
     full_vid_list = get_tutorial_url_list(num_iterations, track=True)
-    print(full_vid_list)
