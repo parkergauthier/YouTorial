@@ -9,7 +9,7 @@ KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 # api_key = f.readline()
 with open(KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Amal_key"]
+api_key = api_keys["Parker_key"]
 
 sample_id = "pb4xXXEA8zk"  # change with variable later, just to make the code run
 
@@ -39,7 +39,7 @@ def clean_comments(comments_dict):
     """Extracts comments from comments-threads dictionary and saves comments into a list of strings"""
     comment_list = []
 
-    for i in range(len(comments_dict)):
+    for i in range(comments_dict["pageInfo"]["totalResults"]):
         comment_list += [
             comments_dict["items"][i]["snippet"]["topLevelComment"]["snippet"][
                 "textOriginal"
@@ -50,4 +50,4 @@ def clean_comments(comments_dict):
 
 
 if __name__ == "__main__":
-    print(clean_comments(get_comments(sample_id)))
+    print(clean_comments(get_comments("i92HaidDigI")))
