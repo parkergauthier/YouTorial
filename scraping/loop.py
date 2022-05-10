@@ -43,7 +43,7 @@ cur = conn_query.cursor()
 
 def snowball(videos_num=100):
 
-    cur.execute(f"select * from snowflake_new_vid_ids limit {videos_num}")
+    cur.execute(f"select * from no_repeat_ids limit {videos_num}")
     i = 0
     for video in cur:
         i += 1
