@@ -10,8 +10,8 @@ from random import sample
 from comments_request import get_comments, clean_comments
 
 # Connecting to DB
-conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
-db = create_engine(conn_string)
+conn_DB = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
+db = create_engine(conn_DB)
 conn = db.connect()
 
 
@@ -31,14 +31,15 @@ api_key = api_keys["John_key"]
 # with open(JSON_PATH_IN, "r") as f:
 #     videos = json.load(f)
 
-conn = psycopg2.connect(
+# create connection for query purpose
+conn_query = psycopg2.connect(
     dbname="youtube-content",
     user="youtube-project",
     host="35.226.197.36",
     password="Zhanghaokun_6",
 )
 
-cur = conn.cursor()
+cur = conn_query.cursor()
 
 cur.execute("""select * from snowflake_new_vid_ids limit 3""")
 
