@@ -58,10 +58,11 @@ records = video_list
 # ]
 #####################
 
-# Looping through videos from list to get metrics/commenst and pushing them to sql
+
 
 
 def send2sql(videos_list):
+    """Looping through videos from list to get metrics/comments and pushing them to sql"""
     for i in videos_list:
 
         # grabbing comments
@@ -89,4 +90,4 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    send2sql(videos_list)
+    #send2sql(videos_list)
