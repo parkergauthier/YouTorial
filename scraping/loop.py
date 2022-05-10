@@ -66,6 +66,8 @@ def send2sql(videos_list):
             metrics_dict_dirty = get_metrics(i, apiKey=api_key)
             metrics_dict = extract_metrics(metrics_dict_dirty)
         except:
+            print(
+                f"This video: [{videos_list[0]}] is unavalable, and has been coded with -9 in metrics")
             metrics_dict = {
                 "videoID": -9,
                 "likes": -9,
