@@ -8,14 +8,14 @@ import os
 import googleapiclient.discovery
 import json
 
-#from metrics_karlo import API_KEY
+# from metrics_karlo import API_KEY
 
 BASE_DIR = "scraping"
 KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 with open(KEY_PATH, "r") as f:
     api_key_dict = json.load(f)
-api_key = api_key_dict['Amal_key']
+api_key = api_key_dict["Amal_key"]
 
 
 def get_metrics(video_id, apiKey=api_key):
@@ -41,15 +41,15 @@ def get_metrics(video_id, apiKey=api_key):
 def extract_metrics(metrics_dict):
 
     clean_dict = {
-        "videoId": metrics_dict["items"][0]["id"],
-        "views": metrics_dict["items"][0]["statistics"]["viewCount"],
+        "videoID": metrics_dict["items"][0]["id"],
         "likes": metrics_dict["items"][0]["statistics"]["likeCount"],
         "comments": metrics_dict["items"][0]["statistics"]["commentCount"],
         "length": metrics_dict["items"][0]["contentDetails"]["duration"],
+        "views": metrics_dict["items"][0]["statistics"]["viewCount"],
     }
 
     return clean_dict
 
 
 if __name__ == "__main__":
-    print(extract_metrics(get_metrics("SwSbnmqk3zY")))
+    print(extract_metrics(get_metrics("pb4xXXEA8zk")))
