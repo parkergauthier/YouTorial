@@ -91,4 +91,5 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    snowball(1000)
+    # send2sql(['eVpbSK4SC2o'])
+    snowball(100)
