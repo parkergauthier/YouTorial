@@ -19,7 +19,7 @@ KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 with open(KEY_PATH) as f:
     all_keys = json.load(f)
-    api_key = all_keys['Elle_key']
+    api_key = all_keys['Amal_key']
 #api_key = 'AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg'
 
 
@@ -41,7 +41,7 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
         maxResults=50,
         topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
         pageToken=token,
-        q="how to | tutorial | recipe | step | lesson | guide | demo | DIY",
+        q="python | coding | NLP | text analysis | tutorial",
         type="video",
         videoCategoryId="26",
         regionCode='US',
@@ -86,7 +86,7 @@ def get_tutorial_url_list(loop_len=50, track=True):
     print("Number of results so far:")
 
     for i in range(loop_len):
-        with open('scraping/tokens_file.json', 'r') as json_file:
+        with open('scraping/cooking_tokens.json', 'r') as json_file:
             token_dict = json.load(json_file)
 
         # print(token_dict['west_page'])
@@ -94,27 +94,22 @@ def get_tutorial_url_list(loop_len=50, track=True):
         # print(token_dict['midwest_page'])
         west_soup = request_search_results(
             token=token_dict['west_page'], region_center=west)
-        token_dict['west_page'] = west_soup['nextPageToken']
         west_list = west_soup['items']
 
         texas_soup = request_search_results(
             token=token_dict['texas_page'], region_center=texas)
-        token_dict['texas_page'] = texas_soup['nextPageToken']
         texas_list = texas_soup['items']
 
         midwest_soup = request_search_results(
             token=token_dict['midwest_page'], region_center=midwest)
-        token_dict['midwest_page'] = midwest_soup['nextPageToken']
         midwest_list = midwest_soup['items']
 
         southeast_soup = request_search_results(
             token=token_dict['southeast_page'], region_center=southeast)
-        token_dict['southeast_page'] = southeast_soup['nextPageToken']
         southeast_list = southeast_soup['items']
 
         northeast_soup = request_search_results(
             token=token_dict['northeast_page'], region_center=northeast)
-        token_dict['northeast_page'] = northeast_soup['nextPageToken']
         northeast_list = northeast_soup['items']
 
         full_id_list += get_vid_ids(west_list)
@@ -134,21 +129,37 @@ def get_tutorial_url_list(loop_len=50, track=True):
         conn = db.connect()
         df.to_sql(con=conn, name="test_table", if_exists="append")
 
-        # print("=========================================")
-        # print(token_dict['west_page'])
-        # print(token_dict['texas_page'])
-        # print(token_dict['midwest_page'])
         print("=========================================")
-        print(token_dict)
-        with open('scraping/tokens_file.json', 'w+') as json_file:
-            json.dump(token_dict, json_file)
         num_results = (i*250+250)
         if track:
-            print(num_results)
+            print(f"{num_results} so far!")
+        # redefine tokens dict
+        try:
+            token_dict['west_page'] = west_soup['nextPageToken']
+            token_dict['texas_page'] = texas_soup['nextPageToken']
+            token_dict['midwest_page'] = midwest_soup['nextPageToken']
+            token_dict['southeast_page'] = southeast_soup['nextPageToken']
+            token_dict['northeast_page'] = northeast_soup['nextPageToken']
+            print(token_dict)
+        except:
+            token_dict = {
+                "west_page": "",
+                "texas_page": "",
+                "midwest_page": "",
+                "southeast_page": "",
+                "northeast_page": ""
+            }
+            with open('scraping/cooking_tokens.json', 'w+') as json_file:
+                json.dump(token_dict, json_file)
+            print("You have reached the end of Search Results for this Query :D")
+            break
+
+        with open('scraping/cooking_tokens.json', 'w+') as json_file:
+            json.dump(token_dict, json_file)
 
     return full_id_list
 
 
 if __name__ == "__main__":
-    num_iterations = 3
+    num_iterations = 15
     full_vid_list = get_tutorial_url_list(num_iterations, track=True)
