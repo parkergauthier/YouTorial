@@ -1,5 +1,4 @@
 import os
-from urllib import response
 import googleapiclient.discovery
 import json
 
@@ -24,15 +23,24 @@ def get_metrics(video_id, apiKey=api_key):
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
     )
-
-    request = youtube.videos().list(part="statistics, contentDetails", id=video_id)
-    response = request.execute()
+    try:
+        request = youtube.videos().list(part="statistics, contentDetails", id=video_id)
+        response = request.execute()
+    except googleapiclient.errors.HttpError as API_ERROR:
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        print(API_ERROR)
+        print("ERROR: Request could not be processed. Check to see if your API key has met it's quota")
+        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        quit()
 
     return response
 
 
 def extract_metrics(metrics_dict):
     """Takes information from a dictionary associated with a video and collects metrics of interest"""
+    if metrics_dict['items'] == []:
+        print("This video has no metrics, it may have been deleted")
+        pass
 
     clean_dict = {
         "videoID": metrics_dict["items"][0]["id"],
@@ -62,5 +70,6 @@ def extract_metrics(metrics_dict):
 
 
 if __name__ == "__main__":
-    print(extract_metrics(get_metrics("hQkJOP7CBII")))
-    # print(get_metrics("hQkJOP7CBII"))
+    # print(extract_metrics(get_metrics("hQkJOP7CBII")))
+    # print(get_metrics("x2XTxT38jms"))
+    print((get_metrics("x2XTxT38jms")))
