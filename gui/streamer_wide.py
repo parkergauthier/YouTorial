@@ -24,12 +24,22 @@ def main():
             url = base_url + f"{query_ids[i]}"
             urls.append(url)
         return urls
-    
+
     top_urls = get_urls(query_ids)
     st.set_page_config(layout="wide")
-    st.image('gui/youtorial_logo.png')
-    st.subheader("Based on our algorithm, these are your top five recommended tutorials:")
+    st.image('gui/youtorial.png')
+    st.header("Based on our algorithm, these are your top five recommended tutorials:")
+    
+    with st.sidebar:
+        c1, c2 = st.columns(2)
+        with c1:
+            st.image('gui/home.png')
+            st.image('gui/compass.png')
+        with c2: 
+            st.header('Home')
+            st.header('About')
 
+    col1, col2, col3, col4, col5 = st.columns(5)    
     with col1:
         event = st_player(top_urls[0])
         st.write(event)
