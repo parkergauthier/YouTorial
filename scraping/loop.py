@@ -88,10 +88,10 @@ def send2sql(videos_list):
         # grabbing comments
         if num_comments > 0:
             comments_dicts = get_comments(i, apiKey=api_key)
-            try:
-                clean_comments_list = clean_comments(comments_dicts)
-            except:
-                clean_comments_list = []
+            # try:
+            clean_comments_list = clean_comments(comments_dicts)
+            # except:
+            #     clean_comments_list = []
         else:
             print(
                 f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
