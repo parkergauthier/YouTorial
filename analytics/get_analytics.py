@@ -142,6 +142,7 @@ if __name__ == "__main__":
     #     sql_frame.to_sql(con=engine, name="analytics", if_exists="append")
     #     print(f"{i} video uploaded successfully: {analysis['videoID']}")
     scheduler = BlockingScheduler()
-    scheduler.add_job(scheduled_upload(), 'interval', minutes=1)
-    scheduler.start()
+    scheduler.add_job(scheduled_upload(), 'interval', hour=1)
     print("Process Scheduled! We will get results every 1 minute(s)")
+    scheduler.start()
+    
