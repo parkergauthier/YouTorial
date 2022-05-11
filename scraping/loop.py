@@ -85,8 +85,9 @@ def send2sql(videos_list):
         df_met.to_sql(con=conn, name="youtube_metrics", if_exists="append")
 
         # grabbing comments
+
+        comments_dicts = get_comments(i, apiKey=api_key)
         try:
-            comments_dicts = get_comments(i, apiKey=api_key)
             clean_comments_list = clean_comments(comments_dicts)
         except:
             clean_comments_list = []

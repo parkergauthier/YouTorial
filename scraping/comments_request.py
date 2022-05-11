@@ -14,7 +14,7 @@ api_key = api_keys["Parker_key"]
 sample_id = "pb4xXXEA8zk"  # change with variable later, just to make the code run
 
 
-def get_comments(video_id, apiKey=api_key):
+def get_comments(video_id, apiKey):
     """Uses the youtube v3 API to get the commentsThread:list object with 25 comments"""
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
@@ -39,6 +39,9 @@ def get_comments(video_id, apiKey=api_key):
             "ERROR: [Comments] Request could not be processed. Check to see if your API key has met it's quota")
         print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
         quit()
+    except:
+        print("something broke here, stopping code")
+        quit()
 
     return response
 
@@ -59,4 +62,4 @@ def clean_comments(comments_dict):
 
 if __name__ == "__main__":
     # print(clean_comments(get_comments("1vmLVzU4KD8")))
-    print(get_comments("1vmLVzU4KD8"))
+    print(get_comments("1vmLVzU4KD8", apiKey=api_key))

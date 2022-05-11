@@ -10,7 +10,7 @@ with open(KEY_PATH, "r") as f:
 api_key = api_key_dict["Parker_key"]
 
 
-def get_metrics(video_id, apiKey=api_key):
+def get_metrics(video_id, apiKey):
     """Retrieves a dictionary from the YouTube Data API for information on views, likes, and comment counts."""
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
@@ -73,4 +73,4 @@ def extract_metrics(metrics_dict):
 if __name__ == "__main__":
     # print(extract_metrics(get_metrics("hQkJOP7CBII")))
     # print(get_metrics("x2XTxT38jms"))
-    print((get_metrics("x2XTxT38jms")))
+    print((get_metrics("x2XTxT38jms", apiKey=api_key)))
