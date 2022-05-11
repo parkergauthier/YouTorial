@@ -119,3 +119,8 @@ cake
 pie
 compose
 arrange
+wrap present
+rap
+fry
+roast
+troubleshoot
