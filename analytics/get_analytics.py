@@ -9,6 +9,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 import re
 import string
 import psycopg2
+from apscheduler.schedulers.blocking import BlockingScheduler
+
 
 try:
     _create_unverified_https_context = ssl._create_unverified_context
@@ -74,11 +76,10 @@ def process_comments(df):
     return sentiment
 
 
-####################
-if __name__ == "__main__":
-    videos_num = 5
+def scheduled_upload():
+    #num_database_items = 5
 
-    #cur.execute(f"select * from no_analysis limit {videos_num}")
+    #cur.execute(f"select * from no_analysis limit {num_database_items}")
     cur.execute(f"select * from no_analysis")
     i = 0
     for video in cur:
@@ -106,3 +107,41 @@ if __name__ == "__main__":
         sql_frame = pd.Series(analysis).to_frame().T.set_index('videoID')
         sql_frame.to_sql(con=engine, name="analytics", if_exists="append")
         print(f"{i} video uploaded successfully: {analysis['videoID']}")
+
+
+####################
+if __name__ == "__main__":
+    # videos_num = 5
+
+    # #cur.execute(f"select * from no_analysis limit {videos_num}")
+    # cur.execute(f"select * from no_analysis")
+    # i = 0
+    # for video in cur:
+    #     i += 1
+
+    #     metrics_tup = video
+    #     analysis = {
+    #         'videoID': metrics_tup[1],
+    #         'views_count': int(metrics_tup[5]),
+    #         'likes': int(metrics_tup[2]),
+    #         'comments_': int(metrics_tup[3]),
+    #         'length_': metrics_tup[4],
+    #     }
+    #     try:
+    #         analysis['like_ratios'] = int(metrics_tup[2])/int(metrics_tup[5])
+    #         analysis['comment_ratio'] = int(metrics_tup[3])/int(metrics_tup[5])
+    #     except:
+    #         analysis['like_ratios'] = 0
+    #         analysis['comment_ratio'] = 0
+    #     videodf = sql_comments(metrics_tup[1])
+    #     sentiment = process_comments(videodf)
+
+    #     analysis['polarity'] = sentiment[0]
+    #     analysis['subjectivity'] = sentiment[1]
+    #     sql_frame = pd.Series(analysis).to_frame().T.set_index('videoID')
+    #     sql_frame.to_sql(con=engine, name="analytics", if_exists="append")
+    #     print(f"{i} video uploaded successfully: {analysis['videoID']}")
+    scheduler = BlockingScheduler()
+    scheduler.add_job(scheduled_upload(), 'interval', minutes=1)
+    scheduler.start()
+    print("Process Scheduled! We will get results every 1 minute(s)")
