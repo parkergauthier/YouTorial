@@ -2,6 +2,8 @@ Text File for Queried Results in the search_results.py file.
 IF A QUERY TERM IS ALREADY IN THIS FILE, PLEASE REFRAIN FROM USING IT IN THE search_results.py "q=" FIELD
 
 
+draw
+paint
 make friends
 tie a tie
 music
@@ -134,3 +136,7 @@ train
 lift
 squat
 pasta
+bread
+bachata
+yoga
+mow
