@@ -93,3 +93,5 @@ chop
 dice
 smoke
 dry
+style
+mold
