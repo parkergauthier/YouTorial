@@ -48,6 +48,15 @@ def get_sentiment(txt):
 
 sentiment_getter = get_sentiment
 
+
+def process_comments(df):
+    comment_list = df.to_list()
+    dirty_text = ' '.join(comment_list)
+    clean = clean_text(dirty_text)
+    sentiment = get_sentiment(clean)
+    return sentiment
+
+
 ####################
 if __name__ == "__main__":
     metrics = sql_data.iloc[0].to_dict()  # <-- sql data
@@ -60,18 +69,9 @@ if __name__ == "__main__":
         'like_ratios': int(metrics['likes'])/int(metrics['views']),
         'comment_ratio': int(metrics['comments'])/int(metrics['views'])
     }
-
-    ID_to_send_to_sql_comments = metrics['videoID']
-    # have to get the comments first, adjust this
-    comments_df = pd.read_sql_table('youtube_comments', engine)
-
-    one_id = comments_df[comments_df['videoID'] ==
-                         'SwSbnmqk3zY']  # not necessary in production
-    comment_list = one_id['comment'].to_list()
-    dirty_text = ' '.join(comment_list)
-    clean = clean_text(dirty_text)
-    sentiment = get_sentiment(clean)
+    videodf =
+    process_comments(videodf)
 
     analysis['polarity'] = sentiment[0]
     analysis['subjectivity'] = sentiment[1]
-    analysis
+    analysis  # <--- send this to sql
