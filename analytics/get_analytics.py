@@ -115,44 +115,17 @@ def scheduled_upload():
 
 ####################
 if __name__ == "__main__":
-    # videos_num = 5
-
-    # #cur.execute(f"select * from no_analysis limit {videos_num}")
-    # cur.execute(f"select * from no_analysis")
-    # i = 0
-    # for video in cur:
-    #     i += 1
-
-    #     metrics_tup = video
-    #     analysis = {
-    #         'videoID': metrics_tup[1],
-    #         'views_count': int(metrics_tup[5]),
-    #         'likes': int(metrics_tup[2]),
-    #         'comments_': int(metrics_tup[3]),
-    #         'length_': metrics_tup[4],
-    #     }
-    #     try:
-    #         analysis['like_ratios'] = int(metrics_tup[2])/int(metrics_tup[5])
-    #         analysis['comment_ratio'] = int(metrics_tup[3])/int(metrics_tup[5])
-    #     except:
-    #         analysis['like_ratios'] = 0
-    #         analysis['comment_ratio'] = 0
-    #     videodf = sql_comments(metrics_tup[1])
-    #     sentiment = process_comments(videodf)
-
-    #     analysis['polarity'] = sentiment[0]
-    #     analysis['subjectivity'] = sentiment[1]
-    #     sql_frame = pd.Series(analysis).to_frame().T.set_index('videoID')
-    #     sql_frame.to_sql(con=engine, name="analytics", if_exists="append")
-    #     print(f"{i} video uploaded successfully: {analysis['videoID']}")
-    # scheduler = BlockingScheduler()
-    # scheduler.add_job(scheduled_upload, 'interval', hours=1)
-    # print("Process Scheduled! We will get results every 1 hours(s)")
-    # scheduler.start()
-    sched = BackgroundScheduler()
-    sched.start()
-    print("Starting process now, checking the database every hour for new results.")
-    sched.add_job(scheduled_upload, 'interval', hours=1)
+    scheduled_upload()
+    scheduler = BlockingScheduler()
+    scheduler.add_job(scheduled_upload, 'interval', hours=1)
+    print("Process Scheduled! We will get results every 1 hours(s)")
+    scheduler.start()
     input("Press enter to exit.")
     sched.shutdown()
+    # sched = BackgroundScheduler()
+    # sched.start()
+    # print("Starting process now, checking the database every hour for new results.")
+    # sched.add_job(scheduled_upload, 'interval', hours=1)
+    # input("Press enter to exit.")
+    # sched.shutdown()
     
