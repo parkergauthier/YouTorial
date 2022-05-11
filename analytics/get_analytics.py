@@ -82,6 +82,8 @@ def scheduled_upload():
     #cur.execute(f"select * from no_analysis limit {num_database_items}")
     cur.execute(f"select * from no_analysis")
     i = 0
+    item_count = cur.rowcount
+    print(f"There are [{item_count}] rows to upload. Starting now! <3")
     for video in cur:
         i += 1
 
