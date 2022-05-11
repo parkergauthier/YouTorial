@@ -51,7 +51,7 @@ def snowball(videos_num=100):
         video_id = send2sql([video[0]])
         print(f"{i} videos completed: {video_id[0]}")
         # except:
-        #print(f"PASSED ON THIS ONE: {video[0]} ")
+        # print(f"PASSED ON THIS ONE: {video[0]} ")
         if i == videos_num:
             print("YAY! ALL DONE! :D")
 
@@ -100,5 +100,15 @@ def send2sql(videos_list):
     return videos_list
 
 
+def clean_sql(table, column):
+    """converts sql columns with strings of numbers to numerics"""
+    cur.execute(
+        f"alter table {table} alter column {column} type integer using cast({column} as integer);"
+    )
+
+
 if __name__ == "__main__":
-    snowball(10)
+    # snowball(10)
+    clean_sql("youtube_metrics", "likes")
+    clean_sql("youtube_metrics", "views")
+    clean_sql("youtube_metrics", "comments")
