@@ -23,7 +23,7 @@ OUT_PATH_TEST = os.path.join(API_BASE_DIR, "testing.csv")
 # Reading API Key
 with open(API_KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Amal_key"]
+api_key = api_keys["Cindy_key"]
 
 # Reading in sample JSON, to be changed with real video list later
 ####################
@@ -111,7 +111,7 @@ def clean_sql(table, column):
 
 
 if __name__ == "__main__":
-    # snowball(10)
-    clean_sql("youtube_metrics", "likes")
-    clean_sql("youtube_metrics", "views")
-    clean_sql("youtube_metrics", "comments")
+    snowball(10)
+    # clean_sql("youtube_metrics", "likes")
+    # clean_sql("youtube_metrics", "views")
+    # clean_sql("youtube_metrics", "comments")

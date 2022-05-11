@@ -29,7 +29,8 @@ def get_metrics(video_id, apiKey=api_key):
     except googleapiclient.errors.HttpError as API_ERROR:
         print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
         print(API_ERROR)
-        print("ERROR: Request could not be processed. Check to see if your API key has met it's quota")
+        print(
+            "ERROR: [Metrics] Request could not be processed. Check to see if your API key has met it's quota")
         print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
         quit()
 

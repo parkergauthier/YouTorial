@@ -22,7 +22,7 @@ def get_comments(video_id, apiKey=api_key):
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = api_key
+    DEVELOPER_KEY = apiKey
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
@@ -35,7 +35,8 @@ def get_comments(video_id, apiKey=api_key):
     except googleapiclient.errors.HttpError as API_ERROR:
         print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
         print(API_ERROR)
-        print("ERROR: Request could not be processed. Check to see if your API key has met it's quota")
+        print(
+            "ERROR: [Comments] Request could not be processed. Check to see if your API key has met it's quota")
         print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
         quit()
 
