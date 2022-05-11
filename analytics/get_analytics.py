@@ -146,6 +146,6 @@ if __name__ == "__main__":
     #     print(f"{i} video uploaded successfully: {analysis['videoID']}")
     scheduler = BlockingScheduler()
     scheduler.add_job(scheduled_upload, 'interval', hours=1)
-    print("Process Scheduled! We will get results every 1 minute(s)")
+    print("Process Scheduled! We will get results every 1 hours(s)")
     scheduler.start()
     
