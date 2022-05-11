@@ -19,7 +19,7 @@ KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 with open(KEY_PATH) as f:
     all_keys = json.load(f)
-    api_key = all_keys['Cindy_key']
+    api_key = all_keys['Jonathan_key']
 #api_key = 'AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg'
 
 
@@ -41,7 +41,7 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
             maxResults=50,
             topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
             pageToken=token,
-            q="ferment",
+            q="arrange",
             type="video",
             order="viewCount",
             videoCategoryId="26",
