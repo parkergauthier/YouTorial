@@ -26,7 +26,7 @@ def main():
     
     top_urls = get_urls(query_ids)
     st.set_page_config(layout="wide")
-    st.image('gui/youtorial.png')
+    st.image('gui/youtorial_logo.png')
     st.write("Based on our algorithm, these are your top five recommended tutorials:")
 
     with st.container(): 
