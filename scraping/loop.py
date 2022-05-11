@@ -76,20 +76,25 @@ def send2sql(videos_list):
                 "views": -9,
             }
         # creating df for metrics
+        num_comments = int(metrics_dict['comments'])
         df_met = pd.Series(metrics_dict).to_frame().T
 
         # change type of views to int
-        df_met.views = df_met.views.astype(int)
+        #df_met.views = df_met.views.astype(int)
 
         # sending df to SQL
         df_met.to_sql(con=conn, name="youtube_metrics", if_exists="append")
 
         # grabbing comments
-
-        comments_dicts = get_comments(i, apiKey=api_key)
-        try:
-            clean_comments_list = clean_comments(comments_dicts)
-        except:
+        if num_comments > 0:
+            comments_dicts = get_comments(i, apiKey=api_key)
+            try:
+                clean_comments_list = clean_comments(comments_dicts)
+            except:
+                clean_comments_list = []
+        else:
+            print(
+                f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
             clean_comments_list = []
 
         # Creating df for comments
