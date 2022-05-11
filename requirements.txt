@@ -1,0 +1,8 @@
+pandas
+psycopg2
+sqlalchemy
+spacy
+nltk
+spacytextblob
+re
+string

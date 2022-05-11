@@ -73,7 +73,7 @@ def send2sql(videos_list):
                 "likes": -9,
                 "comments": -9,
                 "length": -9,
-                "views": -9
+                "views": -9,
             }
         # creating df for metrics
         df_met = pd.Series(metrics_dict).to_frame().T
@@ -106,8 +106,9 @@ def send2sql(videos_list):
 def clean_sql(table, column):
     """converts sql columns with strings of numbers to numerics"""
     cur.execute(
-        f"alter table {table} alter column {column} type integer using cast({column} as integer);"
+        f"alter table {table} alter column {column} type numeric using cast({column} as numeric);"
     )
+
 
 if __name__ == "__main__":
     # snowball(10)
