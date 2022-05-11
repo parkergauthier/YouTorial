@@ -78,7 +78,8 @@ def process_comments(df):
 if __name__ == "__main__":
     videos_num = 5
 
-    cur.execute(f"select * from no_analysis limit {videos_num}")
+    #cur.execute(f"select * from no_analysis limit {videos_num}")
+    cur.execute(f"select * from no_analysis")
     i = 0
     for video in cur:
         i += 1
@@ -90,9 +91,13 @@ if __name__ == "__main__":
             'likes': int(metrics_tup[2]),
             'comments_': int(metrics_tup[3]),
             'length_': metrics_tup[4],
-            'like_ratios': int(metrics_tup[2])/int(metrics_tup[5]),
-            'comment_ratio': int(metrics_tup[3])/int(metrics_tup[5])
         }
+        try:
+            analysis['like_ratios'] = int(metrics_tup[2])/int(metrics_tup[5]),
+            analysis['comment_ratio'] = int(metrics_tup[3])/int(metrics_tup[5])
+        except:
+            analysis['like_ratios'] = int(metrics_tup[2])/int(metrics_tup[5]),
+            analysis['comment_ratio'] = int(metrics_tup[3])/int(metrics_tup[5])
         videodf = sql_comments(metrics_tup[1])
         sentiment = process_comments(videodf)
 
