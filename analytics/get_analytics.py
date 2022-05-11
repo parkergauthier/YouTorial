@@ -93,11 +93,11 @@ if __name__ == "__main__":
             'length_': metrics_tup[4],
         }
         try:
-            analysis['like_ratios'] = int(metrics_tup[2])/int(metrics_tup[5]),
+            analysis['like_ratios'] = int(metrics_tup[2])/int(metrics_tup[5])
             analysis['comment_ratio'] = int(metrics_tup[3])/int(metrics_tup[5])
         except:
-            analysis['like_ratios'] = int(metrics_tup[2])/int(metrics_tup[5]),
-            analysis['comment_ratio'] = int(metrics_tup[3])/int(metrics_tup[5])
+            analysis['like_ratios'] = 0
+            analysis['comment_ratio'] = 0
         videodf = sql_comments(metrics_tup[1])
         sentiment = process_comments(videodf)
 
