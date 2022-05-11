@@ -6,3 +6,10 @@ make friends
 tie a tie
 music
 assemble
+repair
+makeup
+drive
+programming
+clean
+dance
+knit
