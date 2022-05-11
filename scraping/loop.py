@@ -73,10 +73,13 @@ def send2sql(videos_list):
                 "likes": -9,
                 "comments": -9,
                 "length": -9,
-                "views": -9,
+                "views": -9
             }
         # creating df for metrics
         df_met = pd.Series(metrics_dict).to_frame().T
+
+        # change type of views to int
+        df_met.views = df_met.views.astype(int)
 
         # sending df to SQL
         df_met.to_sql(con=conn, name="youtube_metrics", if_exists="append")
@@ -105,7 +108,6 @@ def clean_sql(table, column):
     cur.execute(
         f"alter table {table} alter column {column} type integer using cast({column} as integer);"
     )
-
 
 if __name__ == "__main__":
     # snowball(10)
