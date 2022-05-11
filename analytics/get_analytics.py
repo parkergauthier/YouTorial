@@ -10,6 +10,7 @@ import re
 import string
 import psycopg2
 from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 try:
@@ -144,8 +145,14 @@ if __name__ == "__main__":
     #     sql_frame = pd.Series(analysis).to_frame().T.set_index('videoID')
     #     sql_frame.to_sql(con=engine, name="analytics", if_exists="append")
     #     print(f"{i} video uploaded successfully: {analysis['videoID']}")
-    scheduler = BlockingScheduler()
-    scheduler.add_job(scheduled_upload(), 'interval', hour=1)
-    print("Process Scheduled! We will get results every 1 minute(s)")
-    scheduler.start()
+    # scheduler = BlockingScheduler()
+    # scheduler.add_job(scheduled_upload, 'interval', hours=1)
+    # print("Process Scheduled! We will get results every 1 hours(s)")
+    # scheduler.start()
+    sched = BackgroundScheduler()
+    sched.start()
+    print("Starting process now, checking the database every hour for new results.")
+    sched.add_job(scheduled_upload, 'interval', hours=1)
+    input("Press enter to exit.")
+    sched.shutdown()
     
