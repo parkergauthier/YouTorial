@@ -107,6 +107,7 @@ def scheduled_upload():
         sql_frame = pd.Series(analysis).to_frame().T.set_index('videoID')
         sql_frame.to_sql(con=engine, name="analytics", if_exists="append")
         print(f"{i} video uploaded successfully: {analysis['videoID']}")
+    print(f"All done! We uploaded {i} videos this round! :D")
 
 
 ####################
