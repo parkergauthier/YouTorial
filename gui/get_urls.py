@@ -54,7 +54,10 @@ def get_top_six(input_query="Python"):
         principalDf = pd.DataFrame(data=principalComponents, columns=['PC1'])
         finalDf = pd.concat([stats_table[['videoID', 'title', 'channelID']],
                             principalDf], axis=1).sort_values(by='PC1', ascending=False)
-        id_list = finalDf['videoID'].head(6).to_list()
+        try:
+            id_list = finalDf['videoID'].head(6).to_list()
+        except:
+            id_list = finalDf['videoID'].to_list()
     except:
         id_list = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8',
                    'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
@@ -62,12 +65,6 @@ def get_top_six(input_query="Python"):
 
 
 if __name__ == "__main__":
-    search_string = "Bass Guitar"
-    top_urls = get_top_six(search_string)
-    print(top_urls)
-    default_urls = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8', 'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
-    while len(top_urls) < 6:
-        i = len(top_urls)
-        top_urls.append(default_urls[i])
-    print(top_urls)
-    
+    search_string = "bass"
+    results = get_top_six(search_string)
+    print(results)
