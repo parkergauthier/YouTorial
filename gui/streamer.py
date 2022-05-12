@@ -6,7 +6,7 @@ def main():
     # streamlit code
     # create main page with YouTorial logo
     st.set_page_config(layout="wide")
-    st.image('gui/youtorial.png')
+    st.image('gui/icons/youtorial.png')
     st.markdown('#')
     # create sidebar with link to Github repo
     with st.sidebar:
