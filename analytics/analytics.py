@@ -2,7 +2,6 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import psycopg2
 import plotly.offline as py
 py.init_notebook_mode(connected=True)
@@ -10,6 +9,7 @@ py.init_notebook_mode(connected=True)
 # import plotly.tools as tls
 # import plotly.figure_factory as ff
 import seaborn as sns
+from wordcloud import WordCloud, STOPWORDS
 
 # connect to the database
 conn = psycopg2.connect(database = 'youtube-content',user = 'youtube-project',password = 'Zhanghaokun_6', host = '35.226.197.36', port ='5432' )
@@ -73,6 +73,10 @@ sns.heatmap(data_analytics[['views_log','likes_log', 'comment_log',
                             'polarity', 'subjectivity']].corr(), annot=True)
 plt.show()
 
+# plt.figure(figsize=(15,10))
+# ax = sns.heatmap(data_analytics.corr(),annot=True)
+# bottom, top = ax.get_ylim()
+# ax.set_ylim(bottom + 0.5, top - 0.5)
 
 # plot views-like
 fig, ax = plt.subplots()
@@ -132,3 +136,51 @@ g4.set_title("POLARITY DISTRIBUITION", fontsize=16)
 plt.show()
 g5 = sns.distplot(data_analytics['subjectivity'])
 g5.set_title("SUBEJECTIVITY DISTRIBUITION", fontsize=16)
+
+
+
+
+
+
+# connect to the database
+conn = psycopg2.connect(database = 'youtube-content',user = 'youtube-project',password = 'Zhanghaokun_6', host = '35.226.197.36', port ='5432' )
+
+curs = conn.cursor()
+
+# the SQL code which select data from the table
+sql_a = 'select * from youtube_comments'
+
+# execute the SQL code in database
+curs.execute(sql_a)
+
+# obtain the data
+youtubecmnts = curs.fetchall()
+
+# close
+curs.close()
+
+# data_analytics.columns =list('')
+youtubecmnts = pd.DataFrame(youtubecmnts, columns=['index','VideoID','comment'])
+# df = pd.DataFrame(my_list, columns = ['Names'])
+print(youtubecmnts)
+
+
+# wordcloud
+plt.figure(figsize = (15,15))
+
+stopwords = set(STOPWORDS)
+wordcloud = WordCloud(
+                          background_color='white',
+                          stopwords=stopwords,
+                          max_words=150,
+                          max_font_size=45, 
+                          random_state=70
+                         ).generate(str(youtubecmnts['comment']))
+
+print(wordcloud)
+fig = plt.figure(1)
+plt.imshow(wordcloud)
+plt.title("WORD CLOUD - COMMENTS")
+plt.axis('off')
+plt.show()
+
