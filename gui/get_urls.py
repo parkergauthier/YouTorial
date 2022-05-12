@@ -65,6 +65,15 @@ def get_top_six(input_query='Python'):
 
 
 if __name__ == "__main__":
-    search_string = 'How to draw Sonic the Hedgehog'
+    search_string = 'bass guitar'
+    base_url = "https://www.youtube.com/watch?v="
+    default_urls = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8', 'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
     results = get_top_six(search_string)
+    print(results)
+    if len(results) < 6:
+        y = list(range(6-len(results)))
+        for e in y:
+            print(y)
+            filler_url = base_url + f"{default_urls[e]}"
+            results.append(filler_url)
     print(results)
