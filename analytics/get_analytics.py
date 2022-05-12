@@ -20,15 +20,18 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 nltk.download('stopwords')
 
+# Define Global Variables
 stop_words = stopwords.words('english')
 nlp = spacy.load('en_core_web_sm')
 nlp.add_pipe('spacytextblob')
 
 cur = conn_query.cursor()
-# Functions:
-# def analysis_processing(videos_num=100):
+
+# Define functions
+
 
 def clean_text(text):
+    '''clean text of miscellaneous punctuation and characters'''
     text = text.lower()
     text = re.sub('\[.*?\]', '', text)
     text = re.sub('\w*\d\w*', '', text)
@@ -40,6 +43,7 @@ def clean_text(text):
 
 
 def get_sentiment(txt):
+    '''Perform sentiment analysis on a string of text'''
     doc = nlp(txt)
     sentiment_list = [doc._.blob.polarity, doc._.blob.subjectivity]
     return sentiment_list
@@ -101,7 +105,6 @@ def scheduled_upload():
     print(f"All done! We uploaded {i} videos this round! :D")
 
 
-####################
 if __name__ == "__main__":
     scheduled_upload()
     scheduler = BlockingScheduler()
