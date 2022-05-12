@@ -96,9 +96,6 @@ def get_tutorial_url_list(loop_len=50, track=True):
         with open('scraping/cooking_tokens.json', 'r') as json_file:
             token_dict = json.load(json_file)
 
-        # print(token_dict['west_page'])
-        # print(token_dict['texas_page'])
-        # print(token_dict['midwest_page'])
         west_soup = request_search_results(
             token=token_dict['west_page'], region_center=west)
         west_list = west_soup['items']
