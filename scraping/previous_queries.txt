@@ -2,6 +2,8 @@ Text File for Queried Results in the search_results.py file.
 IF A QUERY TERM IS ALREADY IN THIS FILE, PLEASE REFRAIN FROM USING IT IN THE search_results.py "q=" FIELD
 
 
+
+
 draw
 paint
 make friends
@@ -157,6 +159,7 @@ league
 manhattan
 bartend
 sunscreen
+<<<<<<< HEAD
 Bonsai
 Canoe
 Tie
@@ -192,3 +195,5 @@ thai
 russian
 greek
 overwatch
+=======
+>>>>>>> d04958f08b360ea8723ae3e8e36d023142c514e0
