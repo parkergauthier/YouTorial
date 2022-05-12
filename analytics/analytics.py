@@ -164,23 +164,24 @@ youtubecmnts = pd.DataFrame(youtubecmnts, columns=['index','VideoID','comment'])
 # df = pd.DataFrame(my_list, columns = ['Names'])
 print(youtubecmnts)
 
-
 # wordcloud
 plt.figure(figsize = (15,15))
 
+
 stopwords = set(STOPWORDS)
+
 wordcloud = WordCloud(
                           background_color='white',
                           stopwords=stopwords,
-                          max_words=150,
-                          max_font_size=45, 
-                          random_state=70
+                          max_words=1000000000,
+                          max_font_size=60, 
+                          random_state=50
                          ).generate(str(youtubecmnts['comment']))
 
 print(wordcloud)
 fig = plt.figure(1)
 plt.imshow(wordcloud)
-plt.title("WORD CLOUD - COMMENTS")
+plt.title("WORD CLOUD - TITLES")
 plt.axis('off')
 plt.show()
 
