@@ -17,9 +17,10 @@ OUT_PATH_TEST = os.path.join(API_BASE_DIR, "testing.csv")
 # Reading API Key
 with open(API_KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Alice2_key"]
+api_key = api_keys["Amal_key"]
 
 cur = conn_query.cursor()
+
 
 def snowball(videos_num=100):
 
@@ -82,13 +83,5 @@ def send2sql(videos_list):
     return videos_list
 
 
-def clean_sql(table, column):
-    """converts sql columns with strings of numbers to numerics"""
-    cur.execute(
-        f"alter table {table} alter column {column} type numeric using cast({column} as numeric);"
-    )
-
-
 if __name__ == "__main__":
     snowball(5000)
-
