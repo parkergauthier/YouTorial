@@ -1,6 +1,6 @@
 google-api-python-client
 pandas
-psycopg2
+psycopg2-binary
 sqlalchemy
 spacy
 nltk
@@ -11,3 +11,5 @@ sklearn
 streamlit
 streamlit_player
 python-dotenv
+seaborn
+wordcloud
