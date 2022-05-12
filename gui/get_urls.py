@@ -1,10 +1,10 @@
 import pandas as pd
 import sqlalchemy
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 conn_string = 'postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content'
-engine = sqlalchemy.create_engine(conn_string)
+from database import engine
 
 
 def clean_search_input(input_str):
