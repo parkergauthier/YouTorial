@@ -2,6 +2,8 @@ Text File for Queried Results in the search_results.py file.
 IF A QUERY TERM IS ALREADY IN THIS FILE, PLEASE REFRAIN FROM USING IT IN THE search_results.py "q=" FIELD
 
 
+draw
+paint
 make friends
 tie a tie
 music
@@ -109,3 +111,42 @@ sandwich
 kick
 defence
 ferment
+paraglide
+dive
+hide
+pretend
+icecream
+cookies
+cake
+pie
+compose
+arrange
+wrap present
+rap
+fry
+roast
+troubleshoot
+season
+knot
+grind
+salsa
+waltz
+train dog
+train
+lift
+squat
+pasta
+bread
+bachata
+yoga
+mow
+decorate
+recycle
+revenge
+pregnant
+sex
+prepare
+socialize
+rich
+shape
+select
