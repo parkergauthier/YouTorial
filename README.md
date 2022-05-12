@@ -16,7 +16,9 @@ Our workflow for database management was as follows. Once we scraped YouTube's A
 ### Analysis and Findings
 
 ### GUI 
-To build our web app that shows user the top six recommended tutorials based on our sentiment analysis and ranking algorithm, we used Streamlit, a free online Python-based tool. We first used SQLAlchemy to connect to our GCP-hosted database and query the top six video ID's based on the user's search entry. We then pasted these id's with the base YouTube url to create a list of links to the recommended videos. From there, we used an extraneous package called streamlit_player to directly loop through this list and embed the selected videos onto our web app. After some creative layout-wrangling, we deployed the web app using Streamlit through our Github repository for public use.  
+To build our web app that shows user the top six recommended tutorials based on our sentiment analysis and ranking algorithm, we used Streamlit, a free online Python-based tool. We first used SQLAlchemy to connect to our GCP-hosted database and query the top six video ID's based on the user's search entry. We then pasted these id's with the base YouTube url to create a list of links to the recommended videos. From there, we used an extraneous package called streamlit_player to directly loop through this list and embed the selected videos onto our web app. After some creative layout-wrangling, we deployed the web app using Streamlit through our Github repository for public use. 
+
+[![YouTorial Demo](file:///Users/alicekemp/Downloads/youtorial-salsa-demo.webm.mov)](https://www.youtube.com/watch?v=ek1j272iAmc)
 
 ## Instructions for reproduction
 
