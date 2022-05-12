@@ -36,7 +36,6 @@ def define_query(search_input):
 
 
 def get_top_six(input_query):
-    input_query = 'How to play the Guitar'
     sql_query = define_query(input_query)
 
     stats_table = pd.read_sql(text(sql_query), con=engine)
