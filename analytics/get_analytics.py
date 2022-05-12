@@ -1,6 +1,5 @@
 from nltk.corpus import stopwords
 import pandas as pd
-import sqlalchemy
 import ssl
 import spacy
 from spacytextblob.spacytextblob import SpacyTextBlob
@@ -10,6 +9,7 @@ import string
 import psycopg2
 from apscheduler.schedulers.blocking import BlockingScheduler
 from database import engine
+from database import conn_query
 
 
 try:
@@ -24,16 +24,9 @@ stop_words = stopwords.words('english')
 nlp = spacy.load('en_core_web_sm')
 nlp.add_pipe('spacytextblob')
 
-conn_query = psycopg2.connect(
-    dbname='youtube-content',
-    user='youtube-project',
-    host='35.226.197.36',
-    password='Zhanghaokun_6',
-)
 cur = conn_query.cursor()
 # Functions:
 # def analysis_processing(videos_num=100):
-
 
 def clean_text(text):
     text = text.lower()

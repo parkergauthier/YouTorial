@@ -14,3 +14,10 @@ DATABASE_DATABASE = os.environ["DATABASE_DATABASE"]
 SQLALCHEMY_DATABASE_URL = f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_DATABASE}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+conn_query = psycopg2.connect(
+    dbname='youtube-content',
+    user='youtube-project',
+    host='35.226.197.36',
+    password='Zhanghaokun_6',
+)
