@@ -1,14 +1,14 @@
 from nltk.corpus import stopwords
 import pandas as pd
-import sqlalchemy
 import ssl
 import spacy
 from spacytextblob.spacytextblob import SpacyTextBlob
 import nltk.corpus
 import re
 import string
-import psycopg2
 from apscheduler.schedulers.blocking import BlockingScheduler
+from database import engine
+from database import conn_query
 
 
 try:
@@ -19,27 +19,16 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 nltk.download('stopwords')
 
-# Global Variables
-conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
-engine = sqlalchemy.create_engine(conn_string)
-
-
+# Define Global Variables
 stop_words = stopwords.words('english')
 nlp = spacy.load('en_core_web_sm')
 nlp.add_pipe('spacytextblob')
 
-conn_query = psycopg2.connect(
-    dbname='youtube-content',
-    user='youtube-project',
-    host='35.226.197.36',
-    password='Zhanghaokun_6',
-)
 cur = conn_query.cursor()
-# Functions:
-# def analysis_processing(videos_num=100):
 
-
+# Define functions
 def clean_text(text):
+    '''clean text of miscellaneous punctuation and characters'''
     text = text.lower()
     text = re.sub('\[.*?\]', '', text)
     text = re.sub('\w*\d\w*', '', text)
@@ -51,6 +40,7 @@ def clean_text(text):
 
 
 def get_sentiment(txt):
+    '''Perform sentiment analysis on a string of text'''
     doc = nlp(txt)
     sentiment_list = [doc._.blob.polarity, doc._.blob.subjectivity]
     return sentiment_list
@@ -112,7 +102,6 @@ def scheduled_upload():
     print(f"All done! We uploaded {i} videos this round! :D")
 
 
-####################
 if __name__ == "__main__":
     scheduled_upload()
     scheduler = BlockingScheduler()
