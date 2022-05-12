@@ -45,6 +45,7 @@ def main():
     query_ids = get_top_six(input_query)
 
     st.markdown('#')
+    st.markdown('#')
     st.subheader("Based on our algorithm, these are your recommended tutorials:")    
     
     # paste video IDs with base youtube url 
