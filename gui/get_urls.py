@@ -1,13 +1,31 @@
 import pandas as pd
+import re
+import string
 from sqlalchemy import text
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from database import engine
 
 
+def clean_text(text):
+    '''clean text of miscellaneous punctuation and characters'''
+    text = text.lower()
+    text = re.sub('\[.*?\]', '', text)
+    text = re.sub('\w*\d\w*', '', text)
+    text = re.sub('[‘’“”…]', '', text)
+    text = re.sub('\n', '', text)
+    text = re.sub('[%s]' % re.escape(string.punctuation), '', text)
+    text = re.sub('/(\s\s\s*)/g', ' ', text)
+    return text
+
+
 def clean_search_input(input_str):
     '''Cleans search input and returns an '&' delimitted string for tsquery'''
+    # print(input_str)
+    print(input_str)
+    input_str = clean_text(input_str)
     clean_search = input_str.lower().replace(' ', '&')
+    print(clean_search)
     return clean_search
 
 
@@ -65,6 +83,6 @@ def get_top_six(input_query='Python'):
 
 
 if __name__ == "__main__":
-    search_string = 'How to draw Sonic the Hedgehog'
+    search_string = 'How to draw Sonic ;the Hedgehog/////:::;'
     results = get_top_six(search_string)
     print(results)
