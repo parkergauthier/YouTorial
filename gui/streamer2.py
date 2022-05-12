@@ -41,9 +41,8 @@ def main():
             st.header('Watch later')
             st.header('Liked videos')
     
-    # dropdown list of example queries for presentation
-    search = st.selectbox('Enter query', queries)
-    queries = ['How to draw sonic the hedgehog', 'How to fry an egg', 'How to code in Python', 'How to make salsa']
+    # vieod ids for dropdown options 
+    queries = ['How to draw sonic the hedgehog', 'How to fry an egg', 'How to code in Python', 'How to dance salsa']
     ## SQL queries
     sonic_ids = '
     '
@@ -55,6 +54,7 @@ def main():
     '
 
     # grab video ids of corresponding dropdown selection 
+    search = st.selectbox('Search', queries)
     if search == queries[0]:
         query_ids = sonic_ids
     if search == queries[1]:
