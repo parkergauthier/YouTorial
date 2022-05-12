@@ -2,6 +2,7 @@
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
+import psycopg2
 
 load_dotenv()
 
@@ -16,8 +17,8 @@ SQLALCHEMY_DATABASE_URL = f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 conn_query = psycopg2.connect(
-    dbname='youtube-content',
-    user='youtube-project',
-    host='35.226.197.36',
-    password='Zhanghaokun_6',
+    dbname=DATABASE_DATABASE,
+    user=DATABASE_USERNAME,
+    host=DATABASE_HOST,
+    password=DATABASE_PASSWORD,
 )
