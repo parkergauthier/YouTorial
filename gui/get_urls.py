@@ -3,17 +3,20 @@ import sqlalchemy
 from sqlalchemy import create_engine, text
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
+conn_string = 'postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content'
 engine = sqlalchemy.create_engine(conn_string)
 
 
 def clean_search_input(input_str):
+    '''Cleans search input and returns an '&' delimitted string for tsquery'''
     clean_search = input_str.lower().replace(' ', '&')
     return clean_search
 
 
 def define_query(search_input):
-    bigger_query = f"""select
+    '''Defines the query to be sent to the database'''
+
+    bigger_query = f'''select
 	total_vids."videoID",
 	complete_videos.title,
 	complete_videos."channelID",
@@ -31,22 +34,21 @@ def define_query(search_input):
 		total_vids."videoID" = complete_videos."videoID"
 	where total_vids."videoID" in (
 	select "videoID" from complete_videos 
-	where to_tsvector(title) @@ to_tsquery('{clean_search_input(search_input)}'))"""
+	where to_tsvector(title) @@ to_tsquery('{clean_search_input(search_input)}'))'''
     return bigger_query
 
 
-def get_top_six(input_query="Python"):
+def get_top_six(input_query='Python'):
+    '''Takes in a dataframe of results from a query, performs PCA, and returns the top 6 highest PCA scored video IDs'''
     try:
         sql_query = define_query(input_query)
 
         stats_table = pd.read_sql(text(sql_query), con=engine)
+        # PCA
         features = ['views_count', 'likes', 'comments_',
                     'like_ratios', 'comment_ratio', 'polarity', 'subjectivity']
-        id_frame = ['videoID', 'title', 'channelID']
         # Separating out the features
         x = stats_table.loc[:, features].values
-        # Separating out the target
-        y = stats_table.loc[:, id_frame].values
         # Standardizing the features
         x = StandardScaler().fit_transform(x)
         pca = PCA(n_components=1)
@@ -65,6 +67,6 @@ def get_top_six(input_query="Python"):
 
 
 if __name__ == "__main__":
-    search_string = "bass"
+    search_string = 'How to draw Sonic the Hedgehog'
     results = get_top_six(search_string)
     print(results)
