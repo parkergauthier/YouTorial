@@ -12,14 +12,14 @@ import os
 import googleapiclient.discovery
 import pandas as pd
 import json
-from sqlalchemy import create_engine
+from database import engine
 
 BASE_DIR = 'scraping'
 KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 with open(KEY_PATH) as f:
     all_keys = json.load(f)
-    api_key = all_keys['Karlo_key']
+    api_key = all_keys['walking_key']
 #api_key = 'AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg'
 
 
@@ -41,7 +41,7 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
             maxResults=50,
             topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
             pageToken=token,
-            q="make friends",
+            q="sushi",
             type="video",
             order="viewCount",
             videoCategoryId="26",
@@ -96,9 +96,6 @@ def get_tutorial_url_list(loop_len=50, track=True):
         with open('scraping/cooking_tokens.json', 'r') as json_file:
             token_dict = json.load(json_file)
 
-        # print(token_dict['west_page'])
-        # print(token_dict['texas_page'])
-        # print(token_dict['midwest_page'])
         west_soup = request_search_results(
             token=token_dict['west_page'], region_center=west)
         west_list = west_soup['items']
@@ -127,15 +124,12 @@ def get_tutorial_url_list(loop_len=50, track=True):
 
         # transform list to dataframe
 
+
         df = pd.DataFrame(full_id_list).drop_duplicates().set_index(['videoID'])
         #print(df.shape)
 
         # upload dataframe to table
-
-        conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
-        db = create_engine(conn_string)
-        conn = db.connect()
-        df.to_sql(con=conn, name="youtube_id", if_exists="append")
+        df.to_sql(con=engine, name="youtube_id", if_exists="append")
 
         print("=========================================")
         num_results = (i*250+250)
@@ -169,5 +163,5 @@ def get_tutorial_url_list(loop_len=50, track=True):
 
 
 if __name__ == "__main__":
-    num_iterations = 4
+    num_iterations = 3
     full_vid_list = get_tutorial_url_list(num_iterations, track=True)
