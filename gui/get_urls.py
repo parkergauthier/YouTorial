@@ -35,7 +35,7 @@ def define_query(search_input):
     return bigger_query
 
 
-def get_top_six(input_query):
+def get_top_six(input_query="Python"):
     sql_query = define_query(input_query)
 
     stats_table = pd.read_sql(text(sql_query), con=engine)
