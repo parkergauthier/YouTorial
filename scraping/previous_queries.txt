@@ -159,7 +159,6 @@ league
 manhattan
 bartend
 sunscreen
-<<<<<<< HEAD
 Bonsai
 Canoe
 Tie
@@ -195,5 +194,61 @@ thai
 russian
 greek
 overwatch
-=======
->>>>>>> d04958f08b360ea8723ae3e8e36d023142c514e0
+english
+spanish
+latin
+Norwegian
+alley-oop
+dunk
+swedish
+finnish
+Celtic
+korean
+hebrew
+hindi
+pilot
+paranoid
+sql
+blacksmith
+shave
+think
+drift
+jump
+swing
+scream
+opera
+shoot
+be kind
+be good
+slap
+colonize
+command
+design
+purchase
+bold
+use
+transform
+play guitar
+play bass
+play drum
+play piano
+play violin
+build lego
+lego
+guitar
+bass
+drum
+piano
+violin
+stretch
+hunt
+throw
+show
+spackle
+fire
+feed
+hammer
+ride
+spend
+text
+search
