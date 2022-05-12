@@ -23,7 +23,7 @@ OUT_PATH_TEST = os.path.join(API_BASE_DIR, "testing.csv")
 # Reading API Key
 with open(API_KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Cindy_key"]
+api_key = api_keys["Alice2_key"]
 
 # Reading in sample JSON, to be changed with real video list later
 ####################
@@ -76,11 +76,11 @@ def send2sql(videos_list):
                 "views": -9,
             }
         # creating df for metrics
-        num_comments = int(metrics_dict['comments'])
+        num_comments = int(metrics_dict["comments"])
         df_met = pd.Series(metrics_dict).to_frame().T
 
         # change type of views to int
-        #df_met.views = df_met.views.astype(int)
+        # df_met.views = df_met.views.astype(int)
 
         # sending df to SQL
         df_met.to_sql(con=conn, name="youtube_metrics", if_exists="append")
@@ -93,8 +93,7 @@ def send2sql(videos_list):
             # except:
             #     clean_comments_list = []
         else:
-            print(
-                f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
+            print(f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
             clean_comments_list = []
 
         # Creating df for comments
@@ -117,7 +116,7 @@ def clean_sql(table, column):
 
 
 if __name__ == "__main__":
-    snowball(10)
+    snowball(5000)
     # clean_sql("youtube_metrics", "likes")
     # clean_sql("youtube_metrics", "views")
     # clean_sql("youtube_metrics", "comments")
