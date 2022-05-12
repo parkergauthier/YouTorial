@@ -7,3 +7,10 @@ spacytextblob
 re
 string
 apscheduler
+sklearn
+nturl2path
+streamlit
+streamlit_player
+googleapiclient
+dotenv
+os

@@ -43,7 +43,7 @@ def main():
 
     st.markdown('#')
     st.markdown('#')
-    st.subheader("Based on our algorithm, these are your recommended tutorials:")    
+    st.subheader('Based on our algorithm, these are your recommended tutorials:')    
     
     # paste returned video IDs with base youtube url 
     base_url = "https://www.youtube.com/watch?v="

@@ -152,3 +152,8 @@ shape
 select
 sonic
 french braid
+fantasy
+league
+manhattan
+bartend
+sunscreen

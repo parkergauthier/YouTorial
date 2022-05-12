@@ -1,7 +1,9 @@
 # YouTorial
 
-Getting credentials:
-https://developers.google.com/youtube/registering_an_application
+## Goal
+YouTube's own recommendation engine relies on a variety of factors, some metrics visible to users (likes, views, etc.), and some (personalized results, promoted/sponsored videos, viral hits, etc.) that affect the videos recommended to users. In particular, searches for 'how-to' and tutorial videos tend to return results of varying quality and relevance. Our goal for this project is build our own recommendation algorithm that uses sentiment analysis of comments, likes/dislike ratios, views, video lengths, objectivity scores, and other key metrics. 
+
+## Methodology
 
 ### API Scraping
 
@@ -11,8 +13,13 @@ The first component of this project entailed scraping YouTube's V3 API. Specific
 
 Our workflow for database management was as follows. Once we scraped YouTube's API, we honed in on unique video ID's to populate one table of the Video ID, Video Title, and Channel ID. Using a python script, we queried a distinct list of Video ID's and fed the list into a function which extracted metrics and comments. The function then sent these two separate groups of data to populate two separate tables since they have fundamentally different structures. This process was implemented for tens of thousands of videos. The main task for this team was to iteratvely populate our database while organizing the data structures.
 
-### Analysis
+### Analysis and Findings
 
 ### GUI 
 To build our web app that shows user the top six recommended tutorials based on our sentiment analysis and ranking algorithm, we used Streamlit, a free online Python-based tool. We first used SQLAlchemy to connect to our GCP-hosted database and query the top six video ID's based on the user's search entry. We then pasted these id's with the base YouTube url to create a list of links to the recommended videos. From there, we used an extraneous package called streamlit_player to directly loop through this list and embed the selected videos onto our web app. After some creative layout-wrangling, we deployed the web app using Streamlit through our Github repository for public use.  
 
+## Instructions for reproduction
+
+
+## Future Work 
+While we have a fully operational algorithm to recommend the right videos based on a user's search, our final product suffers from a lack of data. Due to query constraints in scraping videos using the YouTube API, we were limited to how large of a database we can feasibly build within the timeframe of this project. In the future, building out a library of API keys through GCP would allow us to automatically populate our database to provide better recommendations to users. 
