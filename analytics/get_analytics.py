@@ -5,12 +5,10 @@ import ssl
 import spacy
 from spacytextblob.spacytextblob import SpacyTextBlob
 import nltk.corpus
-from sklearn.feature_extraction.text import CountVectorizer
 import re
 import string
 import psycopg2
 from apscheduler.schedulers.blocking import BlockingScheduler
-from apscheduler.schedulers.background import BackgroundScheduler
 
 
 try:
@@ -25,17 +23,16 @@ nltk.download('stopwords')
 conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
 engine = sqlalchemy.create_engine(conn_string)
 
-#sql_data = pd.read_sql_table('youtube_metrics', engine)
 
 stop_words = stopwords.words('english')
 nlp = spacy.load('en_core_web_sm')
-nlp.add_pipe("spacytextblob")
+nlp.add_pipe('spacytextblob')
 
 conn_query = psycopg2.connect(
-    dbname="youtube-content",
-    user="youtube-project",
-    host="35.226.197.36",
-    password="Zhanghaokun_6",
+    dbname='youtube-content',
+    user='youtube-project',
+    host='35.226.197.36',
+    password='Zhanghaokun_6',
 )
 cur = conn_query.cursor()
 # Functions:
@@ -63,13 +60,14 @@ sentiment_getter = get_sentiment
 
 
 def sql_comments(videoID):
-    """gets comments from comments database"""
+    '''gets comments from comments database'''
     sql_comm = pd.read_sql(
         f"""select * from youtube_comments where "videoID" = '{videoID}'""", engine).drop_duplicates()
     return sql_comm
 
 
 def process_comments(df):
+    '''Take in a dataframe with comments, and convert into a list of polarity and subjectivity scores'''
     comment_list = df['comment'].to_list()
     dirty_text = ' '.join(comment_list)
     clean = clean_text(dirty_text)
@@ -78,13 +76,14 @@ def process_comments(df):
 
 
 def scheduled_upload():
+    '''Take in metrics and comments from database and compute stats for analysis'''
+    # sample code if you would like to limit the query amounts commented below
     #num_database_items = 5
-
     #cur.execute(f"select * from no_analysis limit {num_database_items}")
-    cur.execute(f"select * from no_analysis")
+    cur.execute(f'select * from no_analysis')
     i = 0
     item_count = cur.rowcount
-    print(f"There are [{item_count}] rows to upload. Starting now! <3")
+    print(f'There are [{item_count}] rows to upload. Starting now! <3')
     for video in cur:
         i += 1
 
@@ -118,14 +117,5 @@ if __name__ == "__main__":
     scheduled_upload()
     scheduler = BlockingScheduler()
     scheduler.add_job(scheduled_upload, 'interval', hours=1)
-    print("Process Scheduled! We will get results every 1 hours(s)")
+    print('Process Scheduled! We will get results every 1 hours(s)')
     scheduler.start()
-    # input("Press enter to exit.")
-    # sched.shutdown()
-    # sched = BackgroundScheduler()
-    # sched.start()
-    # print("Starting process now, checking the database every hour for new results.")
-    # sched.add_job(scheduled_upload, 'interval', hours=1)
-    # input("Press enter to exit.")
-    # sched.shutdown()
-    
