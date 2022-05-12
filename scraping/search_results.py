@@ -19,7 +19,7 @@ KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 
 with open(KEY_PATH) as f:
     all_keys = json.load(f)
-    api_key = all_keys['walking_key']
+    api_key = all_keys['Jonathan_key']
 #api_key = 'AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg'
 
 
@@ -41,7 +41,7 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
             maxResults=50,
             topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
             pageToken=token,
-            q="sushi",
+            q="",
             type="video",
             order="viewCount",
             videoCategoryId="26",
@@ -151,12 +151,12 @@ def get_tutorial_url_list(loop_len=50, track=True):
                 "southeast_page": "",
                 "northeast_page": ""
             }
-            with open('scraping/cooking_tokens.json', 'w+') as json_file:
+            with open('scraping/tokens_file.json', 'w+') as json_file:
                 json.dump(token_dict, json_file)
             print("You have reached the end of Search Results for this Query :D")
             break
 
-        with open('scraping/cooking_tokens.json', 'w+') as json_file:
+        with open('scraping/tokens_file.json', 'w+') as json_file:
             json.dump(token_dict, json_file)
 
     return full_id_list

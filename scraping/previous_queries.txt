@@ -159,3 +159,41 @@ league
 manhattan
 bartend
 sunscreen
+<<<<<<< HEAD
+Bonsai
+Canoe
+Tie
+Braid
+Fortnight dances
+Twerk
+Square-dance
+Picnic
+Sharpen
+Tenderize
+Marinate
+Fencing
+Boxing
+Languages
+Diorama
+jazz
+map
+navigate
+explore
+translate
+drive a tank
+drink
+estimate
+chinese
+japanese
+italian
+german
+french
+dutch
+vietnamese
+indian
+thai
+russian
+greek
+overwatch
+=======
+>>>>>>> d04958f08b360ea8723ae3e8e36d023142c514e0
