@@ -1,7 +1,4 @@
-from nturl2path import url2pathname
 import streamlit as st
-import pandas as pd
-import numpy as np
 from streamlit_player import st_player
 from get_urls import get_top_six
 
