@@ -36,28 +36,32 @@ def define_query(search_input):
 
 
 def get_top_six(input_query="Python"):
-    sql_query = define_query(input_query)
+    try:
+        sql_query = define_query(input_query)
 
-    stats_table = pd.read_sql(text(sql_query), con=engine)
-    features = ['views_count', 'likes', 'comments_',
-                'like_ratios', 'comment_ratio', 'polarity', 'subjectivity']
-    id_frame = ['videoID', 'title', 'channelID']
-    # Separating out the features
-    x = stats_table.loc[:, features].values
-    # Separating out the target
-    y = stats_table.loc[:, id_frame].values
-    # Standardizing the features
-    x = StandardScaler().fit_transform(x)
-    pca = PCA(n_components=1)
-    principalComponents = pca.fit_transform(x)
-    principalDf = pd.DataFrame(data=principalComponents, columns=['PC1'])
-    finalDf = pd.concat([stats_table[['videoID', 'title', 'channelID']],
-                        principalDf], axis=1).sort_values(by='PC1', ascending=False)
-    id_list = finalDf['videoID'].head(6).to_list()
+        stats_table = pd.read_sql(text(sql_query), con=engine)
+        features = ['views_count', 'likes', 'comments_',
+                    'like_ratios', 'comment_ratio', 'polarity', 'subjectivity']
+        id_frame = ['videoID', 'title', 'channelID']
+        # Separating out the features
+        x = stats_table.loc[:, features].values
+        # Separating out the target
+        y = stats_table.loc[:, id_frame].values
+        # Standardizing the features
+        x = StandardScaler().fit_transform(x)
+        pca = PCA(n_components=1)
+        principalComponents = pca.fit_transform(x)
+        principalDf = pd.DataFrame(data=principalComponents, columns=['PC1'])
+        finalDf = pd.concat([stats_table[['videoID', 'title', 'channelID']],
+                            principalDf], axis=1).sort_values(by='PC1', ascending=False)
+        id_list = finalDf['videoID'].head(6).to_list()
+    except:
+        id_list = ['VOyg2LzNiOA', 'UHRU973uu2c', ' 7rAOLvHX_-8',
+                   'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
     return id_list
 
 
 if __name__ == "__main__":
-    search_string = "How to draw Sonic the Hedgehog"
+    search_string = "How to..."
     results = get_top_six(search_string)
     print(results)
