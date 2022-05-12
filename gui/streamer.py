@@ -1,38 +1,85 @@
-from nturl2path import url2pathname
 import streamlit as st
-import pandas as pd
-import numpy as np
 from streamlit_player import st_player
+from get_urls import get_top_six
+
 
 def main():
+    # streamlit code
+    # create main page with YouTorial logo
+    st.set_page_config(layout="wide")
+    st.image('gui/icons/youtorial.png')
+    st.markdown('#')
+    # create sidebar with link to Github repo
+    with st.sidebar:
+        c1, c2 = st.columns((1, 2))
+        with c1:
+            st.image('gui/icons/home.png')
+            st.image('gui/icons/compass.png')
+            st.image('gui/icons/github.png')
+            st.image('gui/icons/playlist.png')
+            st.markdown('#')
+            st.markdown('#')
+            st.markdown('#')
+            st.image('gui/icons/library.png')
+            st.image('gui/icons/history.png')
+            st.image('gui/icons/watch.png')
+            st.image('gui/icons/thumbs.png')
+
+        with c2:
+            st.header('Home')
+            st.header('About')
+            st.header('[Github](https://github.com/parkergauthier/YouTorial)')
+            st.header('Subscriptions')
+            st.markdown('#')
+            st.markdown('#')
+            st.markdown('#')
+            st.header('Library')
+            st.header('History')
+            st.header('Watch later')
+            st.header('Liked videos')
+
+    # create user search bar and return video ids from database
+    input_query = st.text_input('Enter search:', value='')
+    query_ids = get_top_six(input_query)
+
+    st.markdown('#')
+    st.markdown('#')
+    st.subheader(
+        'Based on our algorithm, these are your recommended tutorials:')
+
+    # paste returned video IDs with base youtube url
     base_url = "https://www.youtube.com/watch?v="
 
-# SQL query once sentiment analysis is done...
-
-# get top 5 ids of ranked results 
-# query_ids = """
-#     select top 5 VideoID
-#     from youtube_ID    
-# """
-# needs to reutn below list of ids: 
-    query_ids = ["ZJy1ajvMU1k", "LdE9u0-SwEY", "ITP6uA8AFto", "yOgQIEywEWg", "Fo9EbhLWW1s"]
-    # paste video IDs with base youtube url 
-    def get_urls(query_ids):
+    def paste_urls(query_ids):
         urls = []
-        for i in range(0,4):
+        for i in range(len(query_ids)):
             url = base_url + f"{query_ids[i]}"
             urls.append(url)
         return urls
-    
-    top_urls = get_urls(query_ids)
 
-    st.title("YouTorial")
-    st.write("Based on our algorithm, these are your top five recommended tutorials:")
+    top_urls = paste_urls(query_ids)
+    default_urls = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8',
+                    'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
 
-    with st.container(): 
-    # Embed top 5 youtube videos 
-        for i in range(0,4):
-            st_player(top_urls[i])
+    # create default (mainpage) videos to populate if less than 6 recommended videos (due to database sparcity)
+    if len(top_urls) < 6:
+        y = list(range(6-len(top_urls)))
+        for e in y:
+            filler_url = base_url + f"{default_urls[e]}"
+            top_urls.append(filler_url)
+
+    # embed recommended videos in grid
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st_player(top_urls[0])
+        st_player(top_urls[3])
+    with col2:
+        st_player(top_urls[1])
+        st_player(top_urls[4])
+    with col3:
+        st_player(top_urls[2])
+        st_player(top_urls[5])
+
 
 # to run: streamlit run gui/streamer.py
 if __name__ == "__main__":

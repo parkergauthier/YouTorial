@@ -2,3 +2,5 @@
 .DS_Store
 scraping/__pycache__/metrics.cpython-310.pyc
 scraping/__pycache__/comments_request.cpython-310.pyc
+*.pyc
+.env

@@ -1,0 +1,15 @@
+pandas
+psycopg2
+sqlalchemy
+spacy
+nltk
+spacytextblob
+re
+string
+apscheduler
+sklearn
+streamlit
+streamlit_player
+googleapiclient
+dotenv
+os
