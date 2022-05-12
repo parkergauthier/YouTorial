@@ -40,24 +40,32 @@ def main():
             st.header('History')
             st.header('Watch later')
             st.header('Liked videos')
-    # dropdown list of example queries for presentation
     
+    # dropdown list of example queries for presentation
     search = st.selectbox('Enter query', queries)
-    queries = ['How to tie a tie', 'How to fry an egg', 'How to code in Python']
-    ## SQL query 
+    queries = ['How to draw sonic the hedgehog', 'How to fry an egg', 'How to code in Python', 'How to make salsa']
+    ## SQL queries
+    sonic_ids = '
+    '
+    egg_ids = '
+    '
+    python_ids = '
+    '
+    salsa_ids = '
+    '
+
+    # grab video ids of corresponding dropdown selection 
     if search == queries[0]:
-        query_ids = ['id1', 'id2', 'id3', 'id4', 'id5', 'id6']
+        query_ids = sonic_ids
     if search == queries[1]:
-        query_ids = ['id1', 'id2', 'id3', 'id4', 'id5', 'id6']
+        query_ids = egg_ids
     if search == queries[2]:
-        query_ids = ['id1', 'id2', 'id3', 'id4', 'id5', 'id6']
+        query_ids = python_ids
+    if search == queries[3]:
+        query_ids = salsa_ids   
     
     st.markdown('#')
     st.subheader("Based on our algorithm, these are your recommended tutorials:")    
-
-    # code to return query_ids based on dropdown selection 
-    query_ids = "
-    "
     
     # paste video IDs with base youtube url 
     base_url = "https://www.youtube.com/watch?v="
