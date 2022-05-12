@@ -6,7 +6,6 @@ from spacytextblob.spacytextblob import SpacyTextBlob
 import nltk.corpus
 import re
 import string
-import psycopg2
 from apscheduler.schedulers.blocking import BlockingScheduler
 from database import engine
 from database import conn_query
@@ -28,8 +27,6 @@ nlp.add_pipe('spacytextblob')
 cur = conn_query.cursor()
 
 # Define functions
-
-
 def clean_text(text):
     '''clean text of miscellaneous punctuation and characters'''
     text = text.lower()
