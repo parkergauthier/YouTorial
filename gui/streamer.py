@@ -1,15 +1,13 @@
 from nturl2path import url2pathname
 import streamlit as st
-import pandas as pd
-import numpy as np
 from streamlit_player import st_player
 from get_urls import get_top_six
 
 def main():
     # streamlit code
     # create page
-    st.set_page_config(layout="wide")
-    st.image('gui/youtorial.png')
+    st.set_page_config(layout='wide')
+    st.image('gui/icons/youtorial.png')
     st.markdown('#')
     # create sidebar to copy you-who-must-not-be-named :) 
     with st.sidebar:
@@ -46,10 +44,10 @@ def main():
 
     st.markdown('#')
     st.markdown('#')
-    st.subheader("Based on our algorithm, these are your recommended tutorials:")    
+    st.subheader('Based on our algorithm, these are your recommended tutorials:')    
     
     # paste video IDs with base youtube url 
-    base_url = "https://www.youtube.com/watch?v="
+    base_url = 'https://www.youtube.com/watch?v='
 
     def paste_urls(query_ids):
         urls = []
