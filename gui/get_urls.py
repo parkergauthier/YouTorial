@@ -56,7 +56,7 @@ def get_top_six(input_query="Python"):
                             principalDf], axis=1).sort_values(by='PC1', ascending=False)
         id_list = finalDf['videoID'].head(6).to_list()
     except:
-        id_list = ['VOyg2LzNiOA', 'UHRU973uu2c', ' 7rAOLvHX_-8',
+        id_list = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8',
                    'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
     return id_list
 
