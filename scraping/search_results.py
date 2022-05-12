@@ -123,8 +123,10 @@ def get_tutorial_url_list(loop_len=50, track=True):
         full_id_list += get_vid_ids(northeast_list)
 
         # transform list to dataframe
+
+
         df = pd.DataFrame(full_id_list).drop_duplicates().set_index(['videoID'])
-        print(df.shape)
+        #print(df.shape)
 
         # upload dataframe to table
         df.to_sql(con=engine, name="youtube_id", if_exists="append")
