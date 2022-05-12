@@ -3,18 +3,18 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from streamlit_player import st_player
-
+from get_urls import get_top_six
 
 def main():
     # streamlit code
+    # create page
     st.set_page_config(layout="wide")
     st.image('gui/youtorial.png')
     st.markdown('#')
-    st.markdown('#')
+    # create sidebar to copy you-who-must-not-be-named :) 
     with st.sidebar:
         c1, c2 = st.columns((1,2))
         with c1:
-            st.image('gui/icons/menu.png')
             st.image('gui/icons/home.png')
             st.image('gui/icons/compass.png')
             st.image('gui/icons/github.png')
@@ -28,7 +28,6 @@ def main():
             st.image('gui/icons/thumbs.png')
 
         with c2: 
-            st.header('#')
             st.header('Home')
             st.header('About')
             st.header('[Github](https://github.com/parkergauthier/YouTorial)')
@@ -41,29 +40,10 @@ def main():
             st.header('Watch later')
             st.header('Liked videos')
     
-    # vieod ids for dropdown options 
-    queries = ['How to draw sonic the hedgehog', 'How to fry an egg', 'How to code in Python', 'How to dance salsa']
-    ## SQL queries
-    sonic_ids = '
-    '
-    egg_ids = '
-    '
-    python_ids = '
-    '
-    salsa_ids = '
-    '
+    # create text entry box and return video ids using SQL query 
+    input_query = st.text_input('Enter search:',value = '')
+    query_ids = get_top_six(input_query)
 
-    # grab video ids of corresponding dropdown selection 
-    search = st.selectbox('Search', queries)
-    if search == queries[0]:
-        query_ids = sonic_ids
-    if search == queries[1]:
-        query_ids = egg_ids
-    if search == queries[2]:
-        query_ids = python_ids
-    if search == queries[3]:
-        query_ids = salsa_ids   
-    
     st.markdown('#')
     st.subheader("Based on our algorithm, these are your recommended tutorials:")    
     
@@ -72,13 +52,20 @@ def main():
 
     def paste_urls(query_ids):
         urls = []
-        for i in range(0,6):
+        for i in range(len(query_ids)):
             url = base_url + f"{query_ids[i]}"
             urls.append(url)
         return urls
     
     top_urls = paste_urls(query_ids)
-
+    default_urls = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8', 'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
+    while len(top_urls) < 6:
+        i = len(top_urls)
+        filler_url = base_url + f"{default_urls[i]}"
+        top_urls.append(filler_url)
+        if i == 5:
+            break
+    
     # return recommended videos 
     col1, col2, col3 = st.columns(3)
     with col1:

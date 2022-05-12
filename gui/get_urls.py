@@ -62,6 +62,12 @@ def get_top_six(input_query="Python"):
 
 
 if __name__ == "__main__":
-    search_string = "How to..."
-    results = get_top_six(search_string)
-    print(results)
+    search_string = "Bass Guitar"
+    top_urls = get_top_six(search_string)
+    print(top_urls)
+    default_urls = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8', 'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
+    while len(top_urls) < 6:
+        i = len(top_urls)
+        top_urls.append(default_urls[i])
+    print(top_urls)
+    
