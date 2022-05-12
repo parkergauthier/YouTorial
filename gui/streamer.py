@@ -7,7 +7,7 @@ def main():
     # streamlit code
     # create page
     st.set_page_config(layout='wide')
-    st.image('gui/youtorial.png')
+    st.image('gui/icons/youtorial.png')
     st.markdown('#')
     # create sidebar to copy you-who-must-not-be-named :) 
     with st.sidebar:
