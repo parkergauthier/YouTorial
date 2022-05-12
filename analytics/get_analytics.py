@@ -9,6 +9,7 @@ import re
 import string
 import psycopg2
 from apscheduler.schedulers.blocking import BlockingScheduler
+from database import engine
 
 
 try:
@@ -18,11 +19,6 @@ except AttributeError:
 else:
     ssl._create_default_https_context = _create_unverified_https_context
 nltk.download('stopwords')
-
-# Global Variables
-conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
-engine = sqlalchemy.create_engine(conn_string)
-
 
 stop_words = stopwords.words('english')
 nlp = spacy.load('en_core_web_sm')
