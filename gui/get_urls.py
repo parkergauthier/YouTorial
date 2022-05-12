@@ -80,6 +80,7 @@ def get_top_six(input_query='Python'):
 
 
 if __name__ == "__main__":
-    search_string = 'bass guitar;;\\\////:)'
+    search_string = 'How to play the guitar'
+    print(f'Searching for: {search_string}')
     results = get_top_six(search_string)
     print(results)
