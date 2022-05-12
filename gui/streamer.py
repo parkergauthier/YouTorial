@@ -54,7 +54,8 @@ def main():
             url = base_url + f"{query_ids[i]}"
             urls.append(url)
         return urls
-        top_urls = paste_urls(query_ids)
+    
+    top_urls = paste_urls(query_ids)
     default_urls = ['VOyg2LzNiOA', 'sCddrLwH-fc', '7rAOLvHX_-8', 'Z9amZgbxhaI', 'KJgtrEGYsTo', 'F6eAQvj_5qA']
 
     # create default (mainpage) videos to populate if less than 6 recommended videos (due to database sparcity)
@@ -68,20 +69,14 @@ def main():
     # embed recommended videos in grid 
     col1, col2, col3 = st.columns(3)
     with col1:
-        event = st_player(top_urls[0])
-        st.write(event)
-        event = st_player(top_urls[3])
-        st.write(event)  
+        st_player(top_urls[0])
+        st_player(top_urls[3])
     with col2:
-        event = st_player(top_urls[1])
-        st.write(event)
-        event = st_player(top_urls[4])
-        st.write(event)
+        st_player(top_urls[1])
+        st_player(top_urls[4])
     with col3:
-        event = st_player(top_urls[2])
-        st.write(event)
-        event = st_player(top_urls[5])
-        st.write(event)
+        st_player(top_urls[2])
+        st_player(top_urls[5])
 
 # to run: streamlit run gui/streamer.py
 if __name__ == "__main__":
