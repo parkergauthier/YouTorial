@@ -150,3 +150,5 @@ socialize
 rich
 shape
 select
+sonic
+french braid
