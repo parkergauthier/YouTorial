@@ -1,17 +1,15 @@
 # Currently encounters runtime
 # loading packages
-from wordcloud import WordCloud, STOPWORDS
 import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import psycopg2
 import plotly.offline as py
 from database import conn_query
 py.init_notebook_mode(connected=True)
-# import plotly.graph_objs as go
-# import plotly.tools as tls
-# import plotly.figure_factory as ff
+import wordcloud
+from collections import Counter
+
 
 # connect to the database
 
@@ -173,22 +171,19 @@ print(youtubecmnts)
 # wordcloud
 plt.figure(figsize=(15, 15))
 
+cmntslist = list(youtubecmnts['comment'].apply(lambda x: x.split()))
+cmntslist = [x for y in cmntslist for x in y]
+# top30words = Counter(cmntslist).most_common(30)
+# cmnts = pd.DataFrame(top30words, columns=['words','frequency'])
+# print(cmnts)
+wc = Counter(cmntslist).most_common(30)
+#  print(wc)
+# cmnts = pd.DataFrame(wc, columns=['words','frequency'])
+# print(cmnts)
 
-stopwords = set(STOPWORDS)
-
-wordcloud = WordCloud(
-
-                          background_color='white',
-                          stopwords=stopwords,
-                          max_words=1000000000,
-                          max_font_size=60, 
-                          random_state=50
-                         ).generate(str(youtubecmnts['comment']))
-
-
-print(wordcloud)
-fig = plt.figure(1)
-plt.imshow(wordcloud)
-plt.title("WORD CLOUD - TITLES")
-plt.axis('off')
-plt.show()
+wc = wordcloud.WordCloud(width=1200, height=500, 
+                         collocations=False, background_color="white", 
+                         colormap="tab20b").generate(" ".join(cmntslist))
+plt.figure(figsize=(15,10))
+plt.imshow(wc, interpolation='bilinear')
+_ = plt.axis("off")
