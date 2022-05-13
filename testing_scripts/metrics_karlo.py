@@ -29,7 +29,7 @@
 import re
 import requests
 
-API_KEY = "AIzaSyC8HoD25F4yaK5fo-Wq06EKhC983t0-sQg"
+API_KEY = ""
 
 def request_id(id):
 
@@ -48,6 +48,6 @@ def request_id(id):
 if __name__ == "__main__":
 
     from pprint import pprint 
-    id = "SCpgKvZB_VQ"
+    id = ""
 
     pprint(request_id(id))

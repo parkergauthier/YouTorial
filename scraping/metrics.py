@@ -2,12 +2,13 @@ import os
 import googleapiclient.discovery
 import json
 
-BASE_DIR = "scraping"
-KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
+BASE_DIR = 'scraping'
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
 
+# Reading API Key
 with open(KEY_PATH, "r") as f:
-    api_key_dict = json.load(f)
-api_key = api_key_dict["Parker_key"]
+    api_keys = json.load(f)
+api_key = api_keys["Key1"]
 
 
 def get_metrics(video_id, apiKey):
@@ -73,4 +74,4 @@ def extract_metrics(metrics_dict):
 if __name__ == "__main__":
     # print(extract_metrics(get_metrics("hQkJOP7CBII")))
     # print(get_metrics("x2XTxT38jms"))
-    print((get_metrics("x2XTxT38jms", apiKey=api_key)))
+    print((get_metrics("9Zxwm3b6Dy4", apiKey=api_key)))

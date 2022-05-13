@@ -27,6 +27,8 @@ nlp.add_pipe('spacytextblob')
 cur = conn_query.cursor()
 
 # Define functions
+
+
 def clean_text(text):
     '''clean text of miscellaneous punctuation and characters'''
     text = text.lower()

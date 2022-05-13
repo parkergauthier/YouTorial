@@ -9,17 +9,16 @@ from database import conn_query
 
 
 # Setting Paths
-API_BASE_DIR = "scraping"
-API_KEY_PATH = os.path.join(API_BASE_DIR, "api_keys.json")
-JSON_PATH_IN = os.path.join(API_BASE_DIR, "500_videos.json")
-OUT_PATH_TEST = os.path.join(API_BASE_DIR, "testing.csv")
+BASE_DIR = 'scraping'
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
 
 # Reading API Key
-with open(API_KEY_PATH, "r") as f:
+with open(KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Alice2_key"]
+api_key = api_keys["Key1"]
 
 cur = conn_query.cursor()
+
 
 def snowball(videos_num=100):
 
@@ -67,7 +66,8 @@ def send2sql(videos_list):
             comments_dicts = get_comments(i, apiKey=api_key)
             clean_comments_list = clean_comments(comments_dicts)
         else:
-            print(f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
+            print(
+                f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
             clean_comments_list = []
 
         # Creating df for comments
@@ -82,13 +82,5 @@ def send2sql(videos_list):
     return videos_list
 
 
-def clean_sql(table, column):
-    """converts sql columns with strings of numbers to numerics"""
-    cur.execute(
-        f"alter table {table} alter column {column} type numeric using cast({column} as numeric);"
-    )
-
-
 if __name__ == "__main__":
-    snowball(5000)
-
+    snowball(100)
