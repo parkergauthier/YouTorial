@@ -9,13 +9,13 @@ from database import conn_query
 
 
 # Setting Paths
-BASE_DIR = 'scraping'
-KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
+BASE_DIR = "scraping"
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/api_keys.json")
 
 # Reading API Key
 with open(KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Key1"]
+api_key = api_keys["Elle_key"]
 
 cur = conn_query.cursor()
 
@@ -66,8 +66,7 @@ def send2sql(videos_list):
             comments_dicts = get_comments(i, apiKey=api_key)
             clean_comments_list = clean_comments(comments_dicts)
         else:
-            print(
-                f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
+            print(f"The follwing video has no comments: [{metrics_dict['videoID']}] ")
             clean_comments_list = []
 
         # Creating df for comments
@@ -83,4 +82,4 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    snowball(100)
+    snowball(5000)
