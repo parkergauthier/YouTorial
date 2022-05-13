@@ -16,6 +16,9 @@ Our workflow for database management was as follows. Once we scraped YouTube's A
 
 ![](miscellaneous/assets/YouTorial_wordcloud.png)
 
+### GUI 
+To build our web app that shows user the top six recommended tutorials based on our sentiment analysis and ranking algorithm (summarized by PCA), we used Streamlit, a free online Python-based tool. We first used SQLAlchemy to connect to our GCP-hosted database and query the top six video ID's based on the user's search entry. We then pasted these id's with the base YouTube url to create a list of links to the recommended videos. From there, we used an extraneous package called streamlit_player to directly loop through this list and embed the selected videos onto our web app. After some creative layout-wrangling, we deployed the web app using Streamlit through our Github repository for public use. 
+
 ### Analysis and Findings
 
  After the performance metrics were collected and joined to the videoIDs, comments and likes were scaled based on the number of views the video had. If a tutorial is helpful it is likely to garner a response from the user in the form of a like or comment. However, if a video has a lot of views then it may have a disproportional amount of engagement simply because it has been viewed more times. Making the comment and like counts proportional to the views allowed us to scale videos which may not have been elevated by the YouTube’s algorithm, but are helpful for the users who found those videos anyway. These metrics capture the proportion of people who were moved to express themselves from watching the tutorial video.  
@@ -25,14 +28,11 @@ Our workflow for database management was as follows. Once we scraped YouTube's A
 
 ![](analytics/P9.png) ![](analytics/P10.png)  
 
-### GUI 
-To build our web app that shows user the top six recommended tutorials based on our sentiment analysis and ranking algorithm (summarized by PCA), we used Streamlit, a free online Python-based tool. We first used SQLAlchemy to connect to our GCP-hosted database and query the top six video ID's based on the user's search entry. We then pasted these id's with the base YouTube url to create a list of links to the recommended videos. From there, we used an extraneous package called streamlit_player to directly loop through this list and embed the selected videos onto our web app. After some creative layout-wrangling, we deployed the web app using Streamlit through our Github repository for public use. 
-
 ## Instructions for reproduction
 
  1) Go to Google Cloud Platform, login, go to APIs & Services/Enable APIs, enable YouTube Data API V3, then create a new API key.  Paste this to scraping/file_dependencies/demo_api_keys.json. 
 
-2) While in GCP, go to SQL, create a new instance, go to Databases, and create a new database. Your credidentials will be on this page.  Use these to populate the .env file.
+2) While in GCP, go to SQL, create a new instance, go to Databases, and create a new database. Your credentials will be on this page.  Use these to populate the .env file.
 
 3) In DBeaver (or your SQL editor of choice), run, in order, the scripts in database/tables_and_views.  This will set up the infrustructure for the database.
 
@@ -46,7 +46,7 @@ To build our web app that shows user the top six recommended tutorials based on 
 
 8) Do a search for a *YouTorial* of your choice! :)
 
-*This process is made to set up the infrustructure of this project.  Following these steps will only populate your tables with 250 videos.  You can scale this up as you see fit by changing the values in the `if __name__ == "__main__":` blocks of 1_search_results.py and 2_loop.py.  Also note that YouTube Data API V3 only allows 10,000 queries in a day.  You will need to wait until this resets to keep populating your database.*
+***This process is made to set up the infrustructure of this project.  Following these steps will only populate your tables with 250 videos.  You can scale this up as you see fit by changing the values in the `if __name__ == "__main__":` blocks of 1_search_results.py and 2_loop.py.  Also note that YouTube Data API V3 only allows 10,000 queries in a day.  You will need to wait until this resets to keep populating your database.***
 
 ## Conclusion
  By providing user-agnostic, unsponsored, and unpromoted results based solely on a metrics-based ranking system, YouTorial fulfills a ubiquitous market need for the recommendation of high quality tutorial videos. During our preliminary research, we realized the full extent of how the concept of virality has degraded the information landscape - many top results were short-format 'hack' videos, viral hits, or generally unhelpful results. In the context of tutorial videos, users need to quickly find high quality, instructive, and vetted tutorials, which YouTube currently fails in providing. In building our final product, one of the main takeaways we learned was how reliant YouTube's recommendation engine is on user-specific data that is tracked by Google. Our recommendation algorithm relies strictly on analyzing metrics and comments pulled from videos themselves - this does provide an unbiased and standardized recommendation, however, it also limits the strength and complexity of our ranking system. In addition, numerous limits on API keys, GCP storage, and search result querying curtailed how large we could build our database, thus impacting the quality and quantity of recommended videos returned for a user's query. Ultimately, our final product relies predominantly on the tonal analysis of comments to rank and recommend the best videos for users, providing an objective solution to a subjective problem. 
