@@ -127,23 +127,23 @@ _ = ax.set_title('Likes - Comments Scatter Plot')
 # views log distribution
 plt.show()
 g1 = sns.distplot(data_analytics['views_log'])
-g1.set_title("VIEWS LOG DISTRIBUITION", fontsize=16)
+g1.set_title("VIEWS LOG DISTRIBUTION", fontsize=16)
 
 plt.show()
 g2 = sns.distplot(data_analytics['likes_log'])
-g2.set_title("LIKES LOG DISTRIBUITION", fontsize=16)
+g2.set_title("LIKES LOG DISTRIBUTION", fontsize=16)
 
 plt.show()
 g3 = sns.distplot(data_analytics['comment_log'])
-g3.set_title("COMMET LOG DISTRIBUITION", fontsize=16)
+g3.set_title("COMMENTS LOG DISTRIBUTION", fontsize=16)
 
 plt.show()
 g4 = sns.distplot(data_analytics['polarity'])
-g4.set_title("POLARITY DISTRIBUITION", fontsize=16)
+g4.set_title("POLARITY DISTRIBUTION", fontsize=16)
 
 plt.show()
 g5 = sns.distplot(data_analytics['subjectivity'])
-g5.set_title("SUBEJECTIVITY DISTRIBUITION", fontsize=16)
+g5.set_title("SUBJECTIVITY DISTRIBUITION", fontsize=16)
 
 
 # connect to the database
