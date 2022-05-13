@@ -25,8 +25,6 @@ Our workflow for database management was as follows. Once we scraped YouTube's A
 
 ![](analytics/P9.png) ![](analytics/P10.png)  
 
-![image](https://user-images.githubusercontent.com/98063426/168331974-68ff30d8-c501-40e4-8bab-df2e87850c99.png)
-
 ### GUI 
 To build our web app that shows user the top six recommended tutorials based on our sentiment analysis and ranking algorithm (summarized by PCA), we used Streamlit, a free online Python-based tool. We first used SQLAlchemy to connect to our GCP-hosted database and query the top six video ID's based on the user's search entry. We then pasted these id's with the base YouTube url to create a list of links to the recommended videos. From there, we used an extraneous package called streamlit_player to directly loop through this list and embed the selected videos onto our web app. After some creative layout-wrangling, we deployed the web app using Streamlit through our Github repository for public use. 
 
