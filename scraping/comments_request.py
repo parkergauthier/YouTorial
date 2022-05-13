@@ -2,14 +2,13 @@ import os
 import googleapiclient.discovery
 import json
 
-BASE_DIR = "scraping"
-KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
+BASE_DIR = 'scraping'
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
 
-# with open(KEY_PATH) as f:
-# api_key = f.readline()
+# Reading API Key
 with open(KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Parker_key"]
+api_key = api_keys["Key1"]
 
 sample_id = "pb4xXXEA8zk"  # change with variable later, just to make the code run
 
@@ -62,4 +61,4 @@ def clean_comments(comments_dict):
 
 if __name__ == "__main__":
     # print(clean_comments(get_comments("1vmLVzU4KD8")))
-    print(get_comments("1vmLVzU4KD8", apiKey=api_key))
+    print(get_comments("9Zxwm3b6Dy4", apiKey=api_key))

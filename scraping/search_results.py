@@ -15,15 +15,16 @@ import json
 from database import engine
 
 BASE_DIR = 'scraping'
-KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
+TOKEN_PATH = os.path.join(BASE_DIR, "file_dependencies/tokens_file.json")
 
 with open(KEY_PATH) as f:
     all_keys = json.load(f)
-    api_key = all_keys['walking_key']
+    api_key = all_keys['Key1']
 #api_key = 'AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg'
 
 
-def request_search_results(token='', region_center='31.898608,-103.346556'):
+def request_search_results(query, token='', region_center='31.898608,-103.346556'):
     '''requests 50 search results for a specified query using the Youtube Data API V3, returns a complex dictionary'''
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
@@ -41,7 +42,7 @@ def request_search_results(token='', region_center='31.898608,-103.346556'):
             maxResults=50,
             topicId="/m/032tl | /m/01k8wb | /m/027x7n | /m/02wbm",
             pageToken=token,
-            q="search",
+            q=query,
             type="video",
             order="viewCount",
             videoCategoryId="26",
@@ -74,46 +75,41 @@ def get_vid_ids(dict_list):
     return id_list
 
 
-def get_tutorial_url_list(loop_len=50, track=True):
+def get_tutorial_url_list(query, loop_len=50, track=True):
     '''Calls functions to request youtube search results as a list of video IDs and titles as a dictionary, with 50 IDs per iteration'''
     full_id_list = []
 
     # define region centers:
     west = '41.564718,-116.336400'
-    #west_page = ''
     texas = '31.898608,-103.346556'
-    #texas_page = ''
     midwest = '46.095507,-94.581880'
-    #midwest_page = ''
     southeast = '33.494011,-84.344213'
-    #southeast_page = ''
     northeast = '44.925322,-71.730317'
-    #northeast_page = ''
 
     print("Number of results so far:")
 
     for i in range(loop_len):
-        with open('scraping/tokens_file.json', 'r') as json_file:
+        with open(TOKEN_PATH, 'r') as json_file:
             token_dict = json.load(json_file)
 
-        west_soup = request_search_results(
-            token=token_dict['west_page'], region_center=west)
+        west_soup = request_search_results(query,
+                                           token=token_dict['west_page'], region_center=west)
         west_list = west_soup['items']
 
-        texas_soup = request_search_results(
-            token=token_dict['texas_page'], region_center=texas)
+        texas_soup = request_search_results(query,
+                                            token=token_dict['texas_page'], region_center=texas)
         texas_list = texas_soup['items']
 
-        midwest_soup = request_search_results(
-            token=token_dict['midwest_page'], region_center=midwest)
+        midwest_soup = request_search_results(query,
+                                              token=token_dict['midwest_page'], region_center=midwest)
         midwest_list = midwest_soup['items']
 
-        southeast_soup = request_search_results(
-            token=token_dict['southeast_page'], region_center=southeast)
+        southeast_soup = request_search_results(query,
+                                                token=token_dict['southeast_page'], region_center=southeast)
         southeast_list = southeast_soup['items']
 
-        northeast_soup = request_search_results(
-            token=token_dict['northeast_page'], region_center=northeast)
+        northeast_soup = request_search_results(query,
+                                                token=token_dict['northeast_page'], region_center=northeast)
         northeast_list = northeast_soup['items']
 
         full_id_list += get_vid_ids(west_list)
@@ -124,9 +120,9 @@ def get_tutorial_url_list(loop_len=50, track=True):
 
         # transform list to dataframe
 
-
-        df = pd.DataFrame(full_id_list).drop_duplicates().set_index(['videoID'])
-        #print(df.shape)
+        df = pd.DataFrame(
+            full_id_list).drop_duplicates().set_index(['videoID'])
+        # print(df.shape)
 
         # upload dataframe to table
         df.to_sql(con=engine, name="youtube_id", if_exists="append")
@@ -151,17 +147,18 @@ def get_tutorial_url_list(loop_len=50, track=True):
                 "southeast_page": "",
                 "northeast_page": ""
             }
-            with open('scraping/tokens_file.json', 'w+') as json_file:
+            with open(TOKEN_PATH, 'w+') as json_file:
                 json.dump(token_dict, json_file)
             print("You have reached the end of Search Results for this Query :D")
             break
 
-        with open('scraping/tokens_file.json', 'w+') as json_file:
+        with open('scraping/file_dependencies/tokens_file.json', 'w+') as json_file:
             json.dump(token_dict, json_file)
 
     return full_id_list
 
 
 if __name__ == "__main__":
-    num_iterations = 3
-    full_vid_list = get_tutorial_url_list(num_iterations, track=True)
+    num_iterations = 1
+    query = 'Teach & Python | C++'
+    full_vid_list = get_tutorial_url_list(query, num_iterations, track=True)
