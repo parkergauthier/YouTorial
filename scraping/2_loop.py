@@ -83,4 +83,4 @@ def send2sql(videos_list):
 
 
 if __name__ == "__main__":
-    snowball(100)
+    snowball(250)
