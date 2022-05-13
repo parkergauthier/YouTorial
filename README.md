@@ -17,6 +17,13 @@ Our workflow for database management was as follows. Once we scraped YouTube's A
 
 ### Analysis and Findings
 
+ After the performance metrics were collected and joined to the videoIDs, comments and likes were scaled based on the number of views the video had. If a tutorial is helpful it is likely to garner a response from the user in the form of a like or comment. However, if a video has a lot of views then it may have a disproportional amount of engagement simple because it has been viewed more times. Making the comment and like counts proportional to the views allowed us to scale videos which may not have been elevated by the YouTube’s algorithm, but are helpful for the users who found those videos anyway. These metrics capture the proportion of people who were moved to express themselves from watching the tutorial video. 
+ For comments, higher engagement can swing in both positive and negative directions. A video could have many comments, but be panning the methods demonstrated. To delineate between positive and negative comment engagement, we employed to different measures of text analysis. The first score was polarity, which take all the text from the comments, cleans them of stop words and quantifies the positive vs negative words overall. The score is measured on a scale from -1 to 1, where scores closer to -1 are more negative in  overall tone and scores close to 1 are more positive in overall tone. This gives insight into the quality of the engagement a video is garnering, which should indicate the quality of the information content. 
+ The second score was subjectivity, which looks at the words which are more opinionated and measures them against words that are objective. The score is on a scale of 0 to 1, where scores closer to 0 are more objective and scores closer to 1 are more opinionated. This score is less clear cut as some tutorial’s quality could be measured by how much someone liked the final product, which is an opinion, while other tutorial’s quality could be measured with how well it fixed an issue or solved a problem which is more of an objective rating. Which rating in subjectivity is more important is contingent on the content on which the tutorial informs. For example, a cooking tutorial more subjective comments might be better for gauging the quality because a persons thoughts about foods and taste are opinion. Conversely a tutorial on changing a cars oil would be better served with more objective comments, as there are objectively correct and incorrect ways of performing this maintenance.
+ 
+![image](https://user-images.githubusercontent.com/98063426/168331974-68ff30d8-c501-40e4-8bab-df2e87850c99.png)
+
+
 ![](analytics/P9.png) ![](analytics/P10.png)
 
 ### GUI 
