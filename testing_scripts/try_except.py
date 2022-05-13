@@ -13,8 +13,8 @@ import googleapiclient.discovery
 import pandas as pd
 import json
 
-# BASE_DIR = "../scraping"
-# KEY_PATH = os.path.join(BASE_DIR, "api_keyPG.txt")
+# BASE_DIR = ""
+# KEY_PATH = os.path.join(BASE_DIR, "")
 
 # with open(KEY_PATH) as f:
 #     api_key = f.readline()
@@ -28,7 +28,7 @@ def request_search_results(token="", region_center="31.898608,-103.346556"):
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = "AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg"
+    DEVELOPER_KEY = ""
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
