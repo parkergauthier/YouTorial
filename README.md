@@ -7,6 +7,11 @@ YouTube's own recommendation engine relies on a variety of factors, some metrics
 ## Methodology
 
 ### Workflow 
+
+Below is a static intepretation of the workflow of this project.
+
+The oval figures represent scripts, the rectangular figures represent tables, and thee triangular figures represent views.
+
 ![](https://github.com/parkergauthier/YouTorial/blob/main/2022-05-15%2014.24.26%202.gif)
 
 ### API Requests
