@@ -7,7 +7,7 @@ YouTube's own recommendation engine relies on a variety of factors, some metrics
 ## Methodology
 
 ### Workflow 
-[]!(https://github.com/parkergauthier/YouTorial/blob/main/2022-05-15%2014.24.26%202.gif)
+![](https://github.com/parkergauthier/YouTorial/blob/main/2022-05-15%2014.24.26%202.gif)
 
 ### API Requests
 
