@@ -7,3 +7,4 @@ scraping/__pycache__/comments_request.cpython-310.pyc
 api_keys,json
 .env
 .env
+.streamlit/secrects.toml
