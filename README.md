@@ -39,23 +39,25 @@ To build our web app we used Streamlit, a free online Python-based tool. We firs
 
 ## Instructions for reproduction
 
- 1) Go to Google Cloud Platform, login, go to APIs & Services/Enable APIs, enable YouTube Data API V3, then create a new API key.  Paste this to scraping/file_dependencies/demo_api_keys.json. 
+1) Go to Google Cloud Platform, login, go to APIs & Services/Enable APIs, enable YouTube Data API V3, then create a new API key. 
 
-2) While in GCP, go to SQL, create a new instance, go to Databases, and create a new database. Your credentials will be on this page.  Use these to populate the .env file.
+2)  Then, following the format in "demo_api_keys.json", create a local file called "your_api_keys.json", save this file in the "scrapping/file_dependencies" folder, and paste your API key into the json next to the key's name. Add this file to the ".gitignore". ** Note: "your_api_keys.json" will be used in "1_search_results.py" on line 17 for the second argument KEY_PATH and in "2_loop.py" on line 13 for the second argument of KEY_PATH, formatted as "file_dependencies/your_api_keys.json". These scripts will be used in steps 5 and 6. **
 
-3) In DBeaver (or your SQL editor of choice), run, in order, the scripts in database/tables_and_views.  This will set up the infrustructure for the database.
+3)  While in GCP, go to SQL, create a new instance, go to Databases, and create a new database. Your credentials will be on this page.  Use these to populate a new, local ".env" file following the format as "demo.env". ** Note: make sure the ".env" file is saved at the top level of this repository (the same level as the "demo.env" file). **
 
-4) Navigate to the scraping folder then open 1_search_results.py.  Go below the `if __name__ == "__main__":` block and specify the query you'd like to run.  Run this script.  This will populate the database with video IDs, title names, and channels associated with your query.
+4) In DBeaver (or your SQL editor of choice), run, in order, the scripts in "database/tables_and_views".  This will set up the infrustructure for the database.
 
-5) While still in the scraping folder, open 2_loop.py and run this to get the metrics and comments for the videos you obtained in Step 4.
+5) Navigate to the scraping folder then open "1_search_results.py".  Go below the `if __name__ == "__main__":` block to lines 171 and 172. Here, you may specify the query you'd like to run on line 172 (what type of tutorial videos to populate the database with).  Additionally, you may increase the number of iterations on line 171 (this determines how many search results the script will get. 1 iteration grabs 250 videos). Run this script.  This will populate the database with video IDs, title names, and channels associated with your query.
 
-6) Navigate to the analysis folder.  Run 3_get_analytics.py. This grabs the videos' metrics and comments from our database, does the sentiment anaylysis on the comments, calculates ratios, and then sends them back to the database.
+6) While still in the scraping folder, open "2_loop.py" and run this to get the metrics and comments for the videos you obtained in Step 4.  The number set in the 'snowball()' function on line 85 dictates how many videos you do this for.  To increase the number of queries, increase the number in this function.
 
-7) Finally, in your terminal, type: python -m streamlit run gui/4_streamer.py.  This will pull up the final product.
+7) Navigate to the analysis folder.  Run "3_get_analytics.py". This grabs the videos' metrics and comments from our database, does the sentiment anaylysis on the comments, calculates ratios, and then sends them back to another table in the database.
 
-8) Do a search for a *YouTorial* of your choice! :)
+8) Finally, in your terminal, type "python -m streamlit run gui/4_streamer.py".  This will pull up the final product.
 
-***This process is made to set up the infrustructure of this project.  Following these steps will only populate your tables with 250 videos.  You can scale this up as you see fit by changing the values in the `if __name__ == "__main__":` blocks of 1_search_results.py and 2_loop.py.  Also note that YouTube Data API V3 only allows 10,000 queries in a day.  You will need to wait until this resets to keep populating your database.***
+9) Do a search for a *YouTorial* of your choice! :)
+
+***This process is made to set up the infrustructure of this project.  Following these steps will only populate your tables with 250 videos if no changes are made to the scripts.  You can scale this up as you see fit by changing the values in the `if __name__ == "__main__":` blocks of 1_search_results.py and 2_loop.py.  Also note that YouTube Data API V3 only allows 10,000 queries in a day.  You will need to wait until this resets to keep populating your database.***
 
 ## Conclusion
  By providing user-agnostic, unsponsored, and unpromoted results based solely on a metrics-based ranking system, YouTorial fulfills a ubiquitous market need for the recommendation of high quality tutorial videos. During our preliminary research, we realized the full extent of how the concept of virality has degraded the information landscape - many top results were short-format 'hack' videos, viral hits, or generally unhelpful results. In the context of tutorial videos, users need to quickly find high quality, instructive, and vetted tutorials, which YouTube currently fails in providing. In building our final product, one of the main takeaways we learned was how reliant YouTube's recommendation engine is on user-specific data that is tracked by Google. Our recommendation algorithm relies strictly on analyzing metrics and comments pulled from videos themselves - this does provide an unbiased and standardized recommendation, however, it also limits the strength and complexity of our ranking system. In addition, numerous limits on API keys, GCP storage, and search result querying curtailed how large we could build our database, thus impacting the quality and quantity of recommended videos returned for a user's query. Ultimately, our final product relies predominantly on the tonal analysis of comments to rank and recommend the best videos for users, providing an objective solution to a subjective problem. 
