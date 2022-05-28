@@ -28,12 +28,12 @@ def request_search_results(token="", region_center="31.898608,-103.346556"):
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = "AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg"
+    DEVELOPER_KEY = "REDACTED"
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
     )
-    try: 
+    try:
         request = youtube.search().list(
             part="snippet",
             maxResults=50,
@@ -48,16 +48,16 @@ def request_search_results(token="", region_center="31.898608,-103.346556"):
         )
         response = request.execute()
     except NameError:
-        print("dumb ass")
+        print("OOPS")
     except IOError:
         print("error arises bc file can’t be opened")
     except KeyboardInterrupt:
         print("error arises when an unrequired key is pressed by the user")
-    except ValueError: 
+    except ValueError:
         print("error arises when built-in function receives a wrong argument")
     except EOFError:
         print("error arises bc End-Of-File is hit without reading any data")
-    except ImportError: 
+    except ImportError:
         print("error arises bc it is unable to find the module")
     else:
         return response

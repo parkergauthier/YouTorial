@@ -4,12 +4,13 @@
 # See instructions for running these code samples locally:
 # https://developers.google.com/explorer-help/code-samples#python
 
-#test 
+# test
 
 #%%
 import os
 
 import googleapiclient.discovery
+
 
 def main():
     # Disable OAuthlib's HTTPS verification when running locally.
@@ -18,10 +19,11 @@ def main():
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = "AIzaSyAtZPilsatG7GcuEKKB1fX-mLSpwsIkydQ"
+    DEVELOPER_KEY = "REDACTED"
 
     youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey = DEVELOPER_KEY)
+        api_service_name, api_version, developerKey=DEVELOPER_KEY
+    )
 
     request = youtube.search().list(
         part="snippet",
@@ -29,11 +31,12 @@ def main():
         pageToken="CDIQAA",
         q="surfing",
         type="video",
-        videoCategoryId="26"
+        videoCategoryId="26",
     )
     response = request.execute()
 
     return response
+
 
 if __name__ == "__main__":
     main()
@@ -43,5 +46,5 @@ soup_ = main()
 ids = []
 
 for i in soup_:
-    soup_.get(etag, default = None)
+    soup_.get(etag, default=None)
     ids = append.ids

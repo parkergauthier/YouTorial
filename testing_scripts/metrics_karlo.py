@@ -11,7 +11,7 @@
 
 #     api_service_name = "youtube"
 #     api_version = "v3"
-#     DEVELOPER_KEY = "AIzaSyC8HoD25F4yaK5fo-Wq06EKhC983t0-sQg"
+#     DEVELOPER_KEY = "redacted"
 
 #     youtube = googleapiclient.discovery.build(
 #         api_service_name, api_version, developerKey=DEVELOPER_KEY
@@ -29,7 +29,7 @@
 import re
 import requests
 
-API_KEY = "AIzaSyC8HoD25F4yaK5fo-Wq06EKhC983t0-sQg"
+API_KEY = #"redacted"
 
 def request_id(id):
 
