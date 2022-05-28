@@ -20,7 +20,7 @@ KEY_PATH = os.path.join(BASE_DIR, "api_keys.json")
 with open(KEY_PATH) as f:
     all_keys = json.load(f)
     api_key = all_keys['Elle_key']
-#api_key = 'AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg'
+
 
 
 def request_search_results(token='', region_center='31.898608,-103.346556'):
@@ -132,7 +132,7 @@ def get_tutorial_url_list(loop_len=50, track=True):
 
         # upload dataframe to table
 
-        conn_string = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
+        conn_string = #"redacted"
         db = create_engine(conn_string)
         conn = db.connect()
         df.to_sql(con=conn, name="youtube_id", if_exists="append")

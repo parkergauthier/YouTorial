@@ -9,7 +9,7 @@ from metrics import get_metrics, extract_metrics
 from comments_request import get_comments, clean_comments
 
 # Connecting to DB
-conn_DB = "postgresql://youtube-project:Zhanghaokun_6@35.226.197.36/youtube-content"
+conn_DB = #"redacted"
 db = create_engine(conn_DB)
 conn = db.connect()
 
@@ -32,10 +32,10 @@ api_key = api_keys["Amal_key"]
 
 # create connection for query purpose
 conn_query = psycopg2.connect(
-    dbname="youtube-content",
-    user="youtube-project",
-    host="35.226.197.36",
-    password="Zhanghaokun_6",
+    dbname="redacted",
+    user="redacted",
+    host="redcated",
+    password="redacted",
 )
 
 cur = conn_query.cursor()

@@ -28,7 +28,7 @@ def request_search_results(token="", region_center="31.898608,-103.346556"):
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = "AIzaSyDjCXavvnwba1KARYeX0z-FhiVlf6bnzcg"
+    DEVELOPER_KEY = #"redacted"
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=DEVELOPER_KEY
@@ -48,7 +48,7 @@ def request_search_results(token="", region_center="31.898608,-103.346556"):
         )
         response = request.execute()
     except NameError:
-        print("dumb ass")
+        print("whoops")
     except IOError:
         print("error arises bc file can’t be opened")
     except KeyboardInterrupt:
