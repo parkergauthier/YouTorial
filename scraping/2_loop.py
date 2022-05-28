@@ -10,12 +10,12 @@ from database import conn_query
 
 # Setting Paths
 BASE_DIR = "scraping"
-KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/api_keys.json")
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/your_api_keys.json")
 
 # Reading API Key
 with open(KEY_PATH, "r") as f:
     api_keys = json.load(f)
-api_key = api_keys["Elle_key"]
+api_key = api_keys["Key1"]
 
 cur = conn_query.cursor()
 

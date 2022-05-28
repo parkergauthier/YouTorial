@@ -14,7 +14,7 @@ import json
 from database import engine
 
 BASE_DIR = "scraping"
-KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/your_api_keys.json")
 TOKEN_PATH = os.path.join(BASE_DIR, "file_dependencies/tokens_file.json")
 
 with open(KEY_PATH) as f:
