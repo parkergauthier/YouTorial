@@ -41,9 +41,9 @@ To build our web app we used Streamlit, a free online Python-based tool. We firs
 
 1) Go to Google Cloud Platform, login, go to APIs & Services/Enable APIs, enable YouTube Data API V3, then create a new API key. 
 
-2)  Then, following the format in "demo_api_keys.json", create a local file called "your_api_keys.json", save this file in the "scrapping/file_dependencies" folder, and paste your API key into the json next to the key's name. Add this file to the ".gitignore". ** Note: "your_api_keys.json" will be used in "1_search_results.py" on line 17 for the second argument KEY_PATH and in "2_loop.py" on line 13 for the second argument of KEY_PATH, formatted as "file_dependencies/your_api_keys.json". These scripts will be used in steps 5 and 6. **
+2)  Then, following the format in "demo_api_keys.json", create a local file called "your_api_keys.json", save this file in the "scrapping/file_dependencies" folder, and paste your API key into the json next to the key's name. Add this file to the ".gitignore". *Note: "your_api_keys.json" will be used in "1_search_results.py" on line 17 for the second argument KEY_PATH and in "2_loop.py" on line 13 for the second argument of KEY_PATH, formatted as "file_dependencies/your_api_keys.json". These scripts will be used in steps 5 and 6*. 
 
-3)  While in GCP, go to SQL, create a new instance, go to Databases, and create a new database. Your credentials will be on this page.  Use these to populate a new, local ".env" file following the format as "demo.env". ** Note: make sure the ".env" file is saved at the top level of this repository (the same level as the "demo.env" file). **
+3)  While in GCP, go to SQL, create a new instance, go to Databases, and create a new database. Your credentials will be on this page.  Use these to populate a new, local ".env" file following the format as "demo.env". *Note: make sure the ".env" file is saved at the top level of this repository (the same level as the "demo.env" file)*. 
 
 4) In DBeaver (or your SQL editor of choice), run, in order, the scripts in "database/tables_and_views".  This will set up the infrustructure for the database.
 
