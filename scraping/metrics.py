@@ -2,8 +2,8 @@ import os
 import googleapiclient.discovery
 import json
 
-BASE_DIR = 'scraping'
-KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
+BASE_DIR = "scraping"
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/your_api_keys.json")
 
 # Reading API Key
 with open(KEY_PATH, "r") as f:
@@ -28,11 +28,16 @@ def get_metrics(video_id, apiKey):
         request = youtube.videos().list(part="statistics, contentDetails", id=video_id)
         response = request.execute()
     except googleapiclient.errors.HttpError as API_ERROR:
-        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        print(
+            "==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*"
+        )
         print(API_ERROR)
         print(
-            "ERROR: [Metrics] Request could not be processed. Check to see if your API key has met it's quota")
-        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+            "ERROR: [Metrics] Request could not be processed. Check to see if your API key has met it's quota"
+        )
+        print(
+            "==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*"
+        )
         quit()
 
     return response
@@ -40,7 +45,7 @@ def get_metrics(video_id, apiKey):
 
 def extract_metrics(metrics_dict):
     """Takes information from a dictionary associated with a video and collects metrics of interest"""
-    if metrics_dict['items'] == []:
+    if metrics_dict["items"] == []:
         print("This video has no metrics, it may have been deleted")
         pass
 

@@ -2,8 +2,8 @@ import os
 import googleapiclient.discovery
 import json
 
-BASE_DIR = 'scraping'
-KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/demo_api_keys.json")
+BASE_DIR = "scraping"
+KEY_PATH = os.path.join(BASE_DIR, "file_dependencies/your_api_keys.json")
 
 # Reading API Key
 with open(KEY_PATH, "r") as f:
@@ -28,15 +28,24 @@ def get_comments(video_id, apiKey):
     )
     try:
         request = youtube.commentThreads().list(
-            part="snippet", maxResults=25, order="relevance", pageToken="", videoId=video_id
+            part="snippet",
+            maxResults=25,
+            order="relevance",
+            pageToken="",
+            videoId=video_id,
         )
         response = request.execute()
     except googleapiclient.errors.HttpError as API_ERROR:
-        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+        print(
+            "==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*"
+        )
         print(API_ERROR)
         print(
-            "ERROR: [Comments] Request could not be processed. Check to see if your API key has met it's quota")
-        print("==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*")
+            "ERROR: [Comments] Request could not be processed. Check to see if your API key has met it's quota"
+        )
+        print(
+            "==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*"
+        )
         quit()
     except:
         print("something broke here, stopping code")
